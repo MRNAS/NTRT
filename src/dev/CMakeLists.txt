@@ -20,5 +20,6 @@ subdirs(
     mcdaly
     bgigous
     # FILL IN FOR 4.1
+    introWorkspace
 )
 
