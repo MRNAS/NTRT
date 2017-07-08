@@ -1,32 +1,76 @@
 nodes:
-  bottom1: [-5, 0, 0]
-  bottom2: [5, 0, 0]
-  bottom3: [0, 0, 8.66]
+#Big Cube nodes
+  bottom1: [-5, -5, 0]
+  bottom2: [5, -5, 0]
+  bottom3: [0, -5, 5]
+  bottom4: [0, -5, -5]
 
   top1: [-5, 5, 0]
   top2: [5, 5, 0]
-  top3: [0, 5, 8.66]
+  top3: [0, 5, 5]
+  top4: [0, 5, -5]
+
+#Small Cube nodes
+  bottom5: [-2.5, -2.5, 0]
+  bottom6: [2.5, -2.5, 0]
+  bottom7: [0, -2.5, 2.5]
+  bottom8: [0, -2.5, -2.5]
+
+  top5: [-2.5, 2.5, 0]
+  top6: [2.5, 2.5, 0]
+  top7: [0, 2.5, 2.5]
+  top8: [0, 2.5, -2.5]
+
 
 pair_groups:
   prism_rod:
-    - [bottom1, top2]
-    - [bottom2, top3]
-    - [bottom3, top1]
-
-  horizontal_string:
-    - [bottom1, bottom2]
-    - [bottom2, bottom3]
-    - [bottom1, bottom3]
-
-    - [top1, top2]
-    - [top2, top3]
-    - [top1, top3]
-
-  vertical_string:
-    # FILL IN FOR PART 6.4
+#Big Cube rods
     - [bottom1, top1]
     - [bottom2, top2]
     - [bottom3, top3]
+    - [bottom4, top4]
+    - [bottom1, bottom3]
+    - [bottom1, bottom4]
+    - [bottom2, bottom3]
+    - [bottom2, bottom4] 
+    - [top1, top3]
+    - [top1, top4]
+    - [top2, top3]
+    - [top2, top4]
+#Small Cube rods
+    - [bottom5, top5]
+    - [bottom6, top6]
+    - [bottom7, top7]
+    - [bottom8, top8]
+    - [bottom5, bottom7]
+    - [bottom5, bottom8]
+    - [bottom6, bottom7]
+    - [bottom6, bottom8] 
+    - [top5, top7]
+    - [top5, top8]
+    - [top6, top7]
+    - [top6, top8]
+    
+
+  #horizontal_string:
+  #  - [bottom1, bottom2]
+  #  - [bottom2, bottom3]
+  #  - [bottom1, bottom3]
+
+  #  - [top1, top2]
+  #  - [top2, top3]
+  #  - [top1, top3]
+
+#Strings between big cube small cube
+  vertical_string:
+    - [bottom1, bottom5]
+    - [bottom2, bottom6]
+    - [bottom3, bottom7]
+    - [bottom4, bottom8]
+    - [top1, top5]
+    - [top2, top6]
+    - [top3, top7]
+    - [top4, top8]
 
 builders:
   prism_rod:
