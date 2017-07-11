@@ -55,7 +55,11 @@ namespace
         double targetVelocity;
     } c =
    {
+<<<<<<< HEAD
        0.2,     // density (mass / length^3)
+=======
+       0.688,     // density (mass / length^3)
+>>>>>>> manueltest1
        0.31,     // radius (length)
        1000.0,   // stiffness (mass / sec^2)
        50.0,     // damping (mass / sec)
@@ -82,6 +86,7 @@ void threeBarModel::addNodes(tgStructure& s,
                             double width,
                             double height)
 {
+<<<<<<< HEAD
     // bottom right
     s.addNode(-edge / 2.0, 0, 0); // 1
     // bottom left
@@ -94,13 +99,63 @@ void threeBarModel::addNodes(tgStructure& s,
     s.addNode( edge / 2.0, height, 0); // 5
     // top front
     s.addNode(0, height, width); // 6
+=======
+    //Large box
+    // bottom 1
+    s.addNode(-5, 0, 0); // 0
+    // bottom 2
+    s.addNode( 5, 0, 0); // 1
+    // bottom 3
+    s.addNode(0, 0, 5); // 2
+    // bottom 4
+    s.addNode(0, 0, -5); // 3
+    // top 1
+    s.addNode(-5, 5, 0); // 4
+    // top 2
+    s.addNode(5, 5, 0); // 5
+    // top 3
+    s.addNode(0, 5, 5); // 6
+    // top 4
+    s.addNode(0, 5, -5); // 7
+    //Small Box
+    // bottom 5
+    s.addNode(-2.5, 1.25, 0); // 8
+    // bottom 6
+    s.addNode( 2.5, 1.25, 0); // 9
+    // bottom 7
+    s.addNode(0, 1.25, 2.5); // 10
+    // bottom 8
+    s.addNode(0, 1.25, -2.5); // 11
+    // top 9
+    s.addNode(-2.5, 3.75, 0); // 12
+    // top 10
+    s.addNode(2.5, 3.75, 0); // 13
+    // top 11
+    s.addNode(0, 3.75, 2.5); // 14
+    // top 12
+    s.addNode(0, 3.75, -2.5); // 15
+>>>>>>> manueltest1
 }
 
 void threeBarModel::addRods(tgStructure& s)
 {
     s.addPair( 0,  4, tgString("rod num", 0));
     s.addPair( 1,  5, tgString("rod num", 1));
+<<<<<<< HEAD
     s.addPair( 2,  3, tgString("rod num", 2));
+=======
+    s.addPair( 2,  6, tgString("rod num", 2));
+    s.addPair( 3,  7, tgString("rod num", 3));
+    s.addPair( 0,  2, tgString("rod num", 4));
+    s.addPair( 0,  3, tgString("rod num", 5));
+    s.addPair( 1,  2, tgString("rod num", 6));
+    s.addPair( 1,  3, tgString("rod num", 7));
+    s.addPair( 4,  6, tgString("rod num", 8));
+    //s.addPair( 4,  7, tgString("rod num", 9));
+    //s.addPair( 6,  6, tgString("rod num", 10));
+    //s.addPair( 7,  7, tgString("rod num", 11));
+
+>>>>>>> manueltest1
 
     // s.addPair( 0,  4, "rod");
     // s.addPair( 1,  5, "rod");

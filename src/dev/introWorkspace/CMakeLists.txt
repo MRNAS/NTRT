@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 link_directories(${LIB_DIR})
 
 message(STATUS "LIB_DIR: " ${LIB_DIR})
@@ -22,3 +23,13 @@ add_executable(App3BarYAML
     LengthControllerYAML.cpp
     App3BarYAML.cpp
 ) 
+=======
+Project(introWorkspace)
+
+# Projects that Manuel is working on...
+subdirs(
+  tgBoxAnchorDebug
+  Traditional
+)
+
+>>>>>>> manueltest1

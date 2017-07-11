@@ -1,0 +1,3 @@
+0000000000000000000000000000000000000000 b09fb016e318462ea344bc1067d2a739481c8a1e TensegriBuntu <andrew.sabelhaus@berkeley.edu> 1427014619 -0700	clone: from https://github.com/NASA-Tensegrity-Robotics-Toolkit/NTRTsim.git
+b09fb016e318462ea344bc1067d2a739481c8a1e 57fba2812fe9652447e0b71a224c79859652ee2e TensegriBuntu <andrew.sabelhaus@berkeley.edu> 1499548873 -0700	pull: Fast-forward
+57fba2812fe9652447e0b71a224c79859652ee2e d889201fbe71bd9f528db178a3e4afbc88563123 TensegriBuntu <andrew.sabelhaus@berkeley.edu> 1499549086 -0700	commit: develop first model tensegrity hedge
