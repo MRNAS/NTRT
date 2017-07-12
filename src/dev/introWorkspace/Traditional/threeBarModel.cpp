@@ -27,6 +27,7 @@
 #include "core/tgString.h"
 // The Bullet Physics library
 #include "LinearMath/btVector3.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
 // The C++ Standard Library
 #include <stdexcept>
 
@@ -118,6 +119,14 @@ void threeBarModel::addNodes(tgStructure& s,
     s.addNode(0, 3.75, -2.5); // 15
 }
 
+//btRigidBody * threeBarModel = //...
+//btTransform tr;
+//tr.setIdentity();
+//btQuaternion quat;
+//quat.setEuler(5,0,0); //or quat.setEulerZYX depending on the ordering you want
+//tr.setRotation(quat);
+//threeBarModel->setCenterOfMassTransform(tr);
+
 void threeBarModel::addRods(tgStructure& s)
 {
     s.addPair( 0,  4, tgString("rod num", 0));
@@ -129,9 +138,9 @@ void threeBarModel::addRods(tgStructure& s)
     s.addPair( 1,  2, tgString("rod num", 6));
     s.addPair( 1,  3, tgString("rod num", 7));
     s.addPair( 4,  6, tgString("rod num", 8));
-    //s.addPair( 4,  7, tgString("rod num", 9));
-    //s.addPair( 6,  6, tgString("rod num", 10));
-    //s.addPair( 7,  7, tgString("rod num", 11));
+    s.addPair( 4,  7, tgString("rod num", 9));
+    s.addPair( 5,  6, tgString("rod num", 10));
+    s.addPair( 5,  7, tgString("rod num", 11));
 
 
     // s.addPair( 0,  4, "rod");
