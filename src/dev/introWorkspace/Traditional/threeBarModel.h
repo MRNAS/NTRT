@@ -39,6 +39,11 @@
 #include "tgcreator/tgRodInfo.h"
 #include "tgcreator/tgStructure.h"
 #include "tgcreator/tgStructureInfo.h"
+#include "BulletDynamics/Vehicle/btRaycastVehicle.h"
+#include "BulletDynamics/ConstraintSolver/btHingeConstraint.h"
+#include "BulletDynamics/ConstraintSolver/btSliderConstraint.h"
+
+#include "GlutDemoApplication.h"
 
 // The C++ Standard Library
 #include <vector>
