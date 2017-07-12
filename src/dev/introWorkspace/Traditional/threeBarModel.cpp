@@ -139,32 +139,32 @@ void threeBarModel::addRods(tgStructure& s)
     // s.addPair( 2,  3, "rod");
 }
 
-void threeBarModel::addActuators(tgStructure& s)
-{
-    // Bottom Triangle
-    s.addPair(0, 1, tgString("actuator num", 0));
-    s.addPair(1, 2, tgString("actuator num", 1));
-    s.addPair(2, 0, tgString("actuator num", 2));
-    
-    // Top
-    s.addPair(3, 4, tgString("actuator num", 3));
-    s.addPair(4, 5, tgString("actuator num", 4));
-    // FILL IN LINE 5.2 HERE
-    s.addPair(5, 3, tgString("actuator num", 5));
+//void threeBarModel::addActuators(tgStructure& s)
+//{
+//    // Bottom Triangle
+//    s.addPair(0, 1, tgString("actuator num", 0));
+//    s.addPair(1, 2, tgString("actuator num", 1));
+//    s.addPair(2, 0, tgString("actuator num", 2));
+//    
+//    // Top
+//    s.addPair(3, 4, tgString("actuator num", 3));
+//    s.addPair(4, 5, tgString("actuator num", 4));
+//    // FILL IN LINE 5.2 HERE
+//    s.addPair(5, 3, tgString("actuator num", 5));
 
     //Edges
-    s.addPair(0, 3, tgString("actuator num", 6));
-    s.addPair(1, 4, tgString("actuator num", 7));
-    s.addPair(2, 5, tgString("actuator num", 8));
-}
+//    s.addPair(0, 3, tgString("actuator num", 6));
+//    s.addPair(1, 4, tgString("actuator num", 7));
+//    s.addPair(2, 5, tgString("actuator num", 8));
+//}
 
 void threeBarModel::setup(tgWorld& world)
 {
     // Define the configurations of the rods and strings
     // Note that pretension is defined for this string
     const tgRod::Config rodConfig(c.radius, c.density);
-    const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
-        c.hist, c.maxTension, c.targetVelocity);
+    //const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
+    //    c.hist, c.maxTension, c.targetVelocity);
     
     // Create a structure that will hold the details of this model
     tgStructure s;
@@ -176,7 +176,7 @@ void threeBarModel::setup(tgWorld& world)
     addRods(s);
     
     // Add actuators to the structure
-    addActuators(s);
+    //addActuators(s);
     
     // Move the structure so it doesn't start in the ground
     s.move(btVector3(0, 10, 0));
@@ -184,7 +184,7 @@ void threeBarModel::setup(tgWorld& world)
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
     spec.addBuilder("rod", new tgRodInfo(rodConfig));
-    spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
+    //spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
     
     // Create your structureInfo
     tgStructureInfo structureInfo(s, spec);
@@ -199,10 +199,10 @@ void threeBarModel::setup(tgWorld& world)
     }
         
     // Get the actuators for controller
-    std::vector<tgBasicActuator*> actuators = threeBarModel::find<tgBasicActuator>("actuator");
-    for (int i = 0; i < rods.size(); i++) {
-        allActuators.push_back(threeBarModel::find<tgBasicActuator>(tgString("actuator num", i))[0]);    
-    }
+    //std::vector<tgBasicActuator*> actuators = threeBarModel::find<tgBasicActuator>("actuator");
+    //for (int i = 0; i < rods.size(); i++) {
+    //    allActuators.push_back(threeBarModel::find<tgBasicActuator>(tgString("actuator num", i))[0]);    
+    //}
 
     // Notify controllers that setup has finished.
     notifySetup();
@@ -232,10 +232,10 @@ void threeBarModel::onVisit(tgModelVisitor& r)
     tgModel::onVisit(r);
 }
 
-std::vector<tgBasicActuator*>& threeBarModel::getAllActuators()
-{
-    return allActuators;
-}
+//std::vector<tgBasicActuator*>& threeBarModel::getAllActuators()
+//{
+//    return allActuators;
+//}
 
 std::vector<tgRod*>& threeBarModel::getAllRods()
 {

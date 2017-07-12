@@ -31,7 +31,7 @@
 #include "core/tgSubject.h"
 
 // Builder libraries
-#include "core/tgBasicActuator.h"
+//#include "core/tgBasicActuator.h"
 #include "core/tgRod.h"
 #include "tgcreator/tgNode.h"
 #include "tgcreator/tgBuildSpec.h"
@@ -106,7 +106,7 @@ public:
      * Return a vector of all actuators for the controllers to work with.
      * @return A vector of all of the actuators
      */
-    std::vector<tgBasicActuator*>& getAllActuators();
+    //std::vector<tgBasicActuator*>& getAllActuators();
 
     /**
      * Return a vector of all rod bodies for the controllers to work with.
@@ -149,7 +149,7 @@ private:
      * A list of all of the basic actuators. Will be empty until most of the way
      * through setup when it is filled using tgModel's find methods
      */
-    std::vector<tgBasicActuator*> allActuators;
+    //std::vector<tgBasicActuator*> allActuators;
 
     /**
      * A list of all of the rods. Will be empty until most of the way

@@ -23,10 +23,10 @@
  * @author Edward Zhu, Drew Sabelhaus
  * $Id$
  */
-
+// include "LengthController.h"
 // This application
 #include "threeBarModel.h"
-#include "LengthController.h"
+
 // This library
 #include "core/terrain/tgBoxGround.h"
 #include "core/terrain/tgEmptyGround.h"
@@ -98,11 +98,11 @@ int main(int argc, char** argv)
     
     // Create the controller
     // FILL IN 5.4 HERE
-	LengthController* const myController = new LengthController();
+	//LengthController* const myController = new LengthController();
 
     // Attach controller to the model
     // FILL IN 5.6 HERE
-	myModel->attach(myController);
+	//myModel->attach(myController);
 
     // Add the model to the world
 	simulation.addModel(myModel);
