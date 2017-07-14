@@ -34,7 +34,7 @@
 #include <vector>
 
 // Forward declarations
-//class btRigidBody;
+class btRigidBody;
 
 /**
  * A rod is a rigid body. Length is defined by nodes, width, height and density
