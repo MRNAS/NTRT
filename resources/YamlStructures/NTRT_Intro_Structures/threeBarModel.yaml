@@ -1,25 +1,25 @@
 nodes:
 #Big Cube nodes
-  bottom1: [-5, -2.5, 0]
-  bottom2: [5, -2.5, 0]
-  bottom3: [0, -2.5, 5]
-  bottom4: [0, -2.5, -5]
+  bottom1: [-5, 0, 0]
+  bottom2: [5, 0, 0]
+  bottom3: [0, 0, 5]
+  bottom4: [0, 0, -5]
 
-  top1: [-5, 2.5, 0]
-  top2: [5, 2.5, 0]
-  top3: [0, 2.5, 5]
-  top4: [0, 2.5, -5]
+  top1: [-5, 5, 0]
+  top2: [5, 5, 0]
+  top3: [0, 5, 5]
+  top4: [0, 5, -5]
 
 #Small Cube nodes 
-  bottom5: [-2.5, -1.25, 0]
-  bottom6: [2.5, -1.25, 0]
-  bottom7: [0, -1.25, 2.5]
-  bottom8: [0, -1.25, -2.5]
+  bottom5: [-2.5, 1.25, 0]
+  bottom6: [2.5, 1.25, 0]
+  bottom7: [0, 1.25, 2.5]
+  bottom8: [0, 1.25, -2.5]
 
-  top5: [-2.5, 1.25, 0]
-  top6: [2.5, 1.25, 0]
-  top7: [0, 1.25, 2.5]
-  top8: [0, 1.25, -2.5]
+  top5: [-2.5, 3.75, 0]
+  top6: [2.5, 3.75, 0]
+  top7: [0, 3.75, 2.5]
+  top8: [0, 3.75, -2.5]
 
 
 pair_groups:
@@ -78,6 +78,12 @@ builders:
     parameters:
       density: 0.688
       radius: 0.31
+  prism_box:
+    class: tgBoxInfo
+    parameters:
+      density: 0.688
+      width: 0.31
+      height: 0.5
   horizontal_string:
     class: tgBasicActuatorInfo
     parameters:

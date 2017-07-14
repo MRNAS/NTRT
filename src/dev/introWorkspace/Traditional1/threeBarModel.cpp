@@ -27,6 +27,9 @@
 #include "core/tgString.h"
 // The Bullet Physics library
 #include "LinearMath/btVector3.h"
+#include "BulletDynamics/Dynamics/btRigidBody.h"
+#include "LinearMath/btQuaternion.h"
+#include "LinearMath/btTransform.h"
 // The C++ Standard Library
 #include <stdexcept>
 
@@ -42,10 +45,6 @@ namespace
      */
     const struct Config
     {
-        double width;
-        double height;
-        double friction;
-        double restitution; //cp
         double density;
         double radius;
         double stiffness;
@@ -59,10 +58,6 @@ namespace
         double targetVelocity;
     } c =
    {
-       1,
-       1,
-       1,
-       1,
        0.688,     // density (mass / length^3)
        0.31,     // radius (length)
        1000.0,   // stiffness (mass / sec^2)
@@ -84,7 +79,6 @@ threeBarModel::threeBarModel() : tgModel()
 threeBarModel::~threeBarModel()
 {
 }
-
 
 void threeBarModel::addNodes(tgStructure& s,
                             double edge,
@@ -156,52 +150,6 @@ void threeBarModel::addRods(tgStructure& s)
     // s.addPair( 2,  3, "rod");
 }
 
-void threeBarModel::addBoxes(int&)
-{
-    const int nBoxes = 1;
-}
-//kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-//void	threeBarModel::(tgStructure& s)
-//{
-//	m_azi=90;
-//	m_ele = 20;
-
-//	setTexturing(true);
-//	setShadows(true);
-//	setCameraUp(btVector3(0,0,1));
-//	setCameraForwardAxis(1);
-//	m_sundirection.setValue(0,-1,-1);
-//	setCameraDistance(7.f);
-
-
-	//btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(50.),btScalar(50.),btScalar(0.5)));
-//	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,0,1),0);
-	
-//	m_collisionShapes.push_back(groundShape);
-//	btTransform groundTransform;
-//	groundTransform.setIdentity();
-//	groundTransform.setOrigin(btVector3(0,0,0));
-//	btRigidBody* groundBody;
-//	groundBody= localCreateRigidBody(0, groundTransform, groundShape);
-//	groundBody->setFriction(btSqrt(2));
-//	btVector3 positions[1] = {
-//		btVector3(0.8,-2,2),
-//	};
-//		btVector3 localInertia;
-//		btRigidBody* body = new btRigidBody(1,0,compound,localInertia);
-//		btTransform tr;
-//		tr.setIdentity();
-//		tr.setOrigin(positions[1]);
-//		body->setCenterOfMassTransform(tr);
-//		body->setAngularVelocity(btVector3(0,0,15));
-//		body->setLinearVelocity(btVector3(0,.2,0));
-//		body->setFriction(btSqrt(1));
-
-//}
-
-//kkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkkk
-
-
 //void threeBarModel::addActuators(tgStructure& s)
 //{
 //    // Bottom Triangle
@@ -226,7 +174,6 @@ void threeBarModel::setup(tgWorld& world)
     // Define the configurations of the rods and strings
     // Note that pretension is defined for this string
     const tgRod::Config rodConfig(c.radius, c.density);
-    const tgBox::Config boxConfig(c.width, c.height, c.density)
     //const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
     //    c.hist, c.maxTension, c.targetVelocity);
     
@@ -239,14 +186,15 @@ void threeBarModel::setup(tgWorld& world)
     // Add rods to the structure
     addRods(s);
     
-    //Add Boxes
-    addBoxes(s);
-
     // Add actuators to the structure
     //addActuators(s);
     
     // Move the structure so it doesn't start in the ground
     s.move(btVector3(0, 10, 0));
+  //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
+    btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
+    //s.addRotation(btVector3(0,10,0),btQuaternion(1,2,4,3));
+//    s.addPair(2, 5, tgString("actuator num", 8));
     
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
@@ -264,7 +212,6 @@ void threeBarModel::setup(tgWorld& world)
     for (int i = 0; i < rods.size(); i++) {
         allRods.push_back(threeBarModel::find<tgRod>(tgString("rod num", i))[0]);    
     }
-    
         
     // Get the actuators for controller
     //std::vector<tgBasicActuator*> actuators = threeBarModel::find<tgBasicActuator>("actuator");
@@ -308,11 +255,6 @@ void threeBarModel::onVisit(tgModelVisitor& r)
 std::vector<tgRod*>& threeBarModel::getAllRods()
 {
     return allRods;
-}
-
-std::vector<tgBox*>& threeBarModel::getAllBoxes()
-{
-    return allBoxes;
 }
     
 void threeBarModel::teardown()

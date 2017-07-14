@@ -56,6 +56,12 @@ builders:
     parameters:
       density: 0.688
       radius: 0.31
+  prism_box:
+    class: tgBoxInfo
+    parameters:
+      density: 0.688
+      width: 0.31
+      height: 0.5
   horizontal_string:
     class: tgBasicActuatorInfo
     parameters:

@@ -37,11 +37,11 @@
 #include "tgcreator/tgBuildSpec.h"
 #include "tgcreator/tgBasicActuatorInfo.h"
 #include "tgcreator/tgRodInfo.h"
-#include "tgcreator/tgBoxInfo.h"
 #include "tgcreator/tgStructure.h"
 #include "tgcreator/tgStructureInfo.h"
-#include "core/tgBox.h"
-
+#include "BulletDynamics/Vehicle/btRaycastVehicle.h"
+#include "BulletDynamics/ConstraintSolver/btHingeConstraint.h"
+#include "BulletDynamics/ConstraintSolver/btSliderConstraint.h"
 
 #include "GlutDemoApplication.h"
 
@@ -53,7 +53,6 @@ class tgBasicActuator;
 class tgModelVisitor;
 class tgStructure;
 class tgWorld;
-class tgBox;
 
 /**
  * A class that constructs a three bar tensegrity prism using the tools
@@ -119,7 +118,6 @@ public:
      * @return A vector of all of the rod rigid bodies
      */
     std::vector<tgRod*>& getAllRods();
-    std::vector<tgBox*>& getAllBoxes();
       
 private:
     
@@ -143,7 +141,6 @@ private:
      * @param[in] s A tgStructure that we're building into
      */
     static void addRods(tgStructure& s);
-    static void threeBarModel::addBoxes(int&);
     
     /**
      * A function called during setup that creates actuators (Strings) from
@@ -164,7 +161,6 @@ private:
      * through setup when it is filled using tgModel's find methods
      */
     std::vector<tgRod*> allRods;
-    std::vector<tgBox*> allBoxes;
 };
 
 #endif  // THREE_BAR_MODEL_H
