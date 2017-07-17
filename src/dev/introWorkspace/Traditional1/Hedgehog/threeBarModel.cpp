@@ -33,6 +33,23 @@
 // The C++ Standard Library
 #include <stdexcept>
 
+// Dependencies coming from Gyro
+#include "btBulletDynamicsCommon.h"
+#include "LinearMath/btIDebugDraw.h"
+
+#include "GLDebugDrawer.h"
+
+#include "GLDebugFont.h"
+#include <stdio.h> //printf debugging
+
+#include "GL_ShapeDrawer.h"
+#include "GlutStuff.h"
+
+
+#include "GLDebugDrawer.h"
+//Dependencies coming from Gyro
+
+
 /**
  * Anonomous namespace so we don't have to declare the config in
  * the header.
