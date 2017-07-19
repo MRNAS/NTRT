@@ -23,6 +23,11 @@ subject to the following restrictions:
 #define PlatformDemoApplication GlutDemoApplication
 #endif
 
+class tgBasicActuator;
+class tgModelVisitor;
+class tgStructure;
+class tgWorld;
+
 ///GyroscopicDemo shows how to create a constraint, like Hinge or btGenericD6constraint
 class GyroscopicDemo : public PlatformDemoApplication
 {

@@ -81,6 +81,8 @@ public:
      */
 
     void addModel(tgModel* pModel);
+    
+    
     /**
      * Add an obstacle to the simulation.
      * Obstacles are deleted upon reset.

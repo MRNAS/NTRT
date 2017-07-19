@@ -171,41 +171,70 @@ void threeBarModel::addRods(tgStructure& s)
 
 void	threeBarModel::initPhysics()
 {
+	//m_azi=90;
+	//m_ele = 20;
+	
+	btCollisionShape* groundShape = new btStaticPlaneShape(btVector3(0,0,1),0);
+	
+	//m_collisionShapes.push_back(groundShape);
+	/*btTransform groundTransform;
+	groundTransform.setIdentity();
+	groundTransform.setOrigin(btVector3(0,0,0));
+	btRigidBody* groundBody;
+	groundBody= localCreateRigidBody(0, groundTransform, groundShape);
+	groundBody->setFriction(btSqrt(2));
+	btVector3 positions[2] = {
+		btVector3(0.8,-2,2),
+		btVector3(0.8,2,2)
+	};
+	//bool gyro[2] = {
+	//	true,
+	//	false
+	//};
+	*/
 	for (int i=0;i<1;i++)
 	{
 		
-		//ISSUES HERE
+		
 		//btCylinderShapeZ* top  = new btCylinderShapeZ(btVector3(1,1,0.125));
 		//btCapsuleShapeZ* pin  = new btCapsuleShapeZ(0.05,1.5);
-		tgBox* box= new tgBox(btVector3(1 ,1 ,1 ) );
+		btBoxShape* box= new btBoxShape(btVector3(1 ,1 ,1 ) );
+		box->setMargin(0.01);
+		btCompoundShape* compound = new btCompoundShape();
+		compound->addChildShape(btTransform::getIdentity(),box);
+		btVector3 localInertia;
+		box->calculateLocalInertia(1, localInertia);
+		btRigidBody* body = new btRigidBody(1,0,compound,localInertia);
+		//top->setMargin(0.01);
+		//tgBox* box= new tgBox(btVector3(1 ,1 ,1 ) );
 		//top->setMargin(0.01);
 		//pin->setMargin(0.01);
-		box->setMargin(0.01);
+		//box->setMargin(0.01);
 		//btCompoundShape* compound = new btCompoundShape();
 		//compound->addChildShape(btTransform::getIdentity(),top);
 		//compound->addChildShape(btTransform::getIdentity(),pin);
 		//compound->addChildShape(btTransform::getIdentity(),box);
-		btVector3 localInertia;
+		//btVector3 localInertia;
 		//top->calculateLocalInertia(1,localInertia);
 		//box->calculateLocalInertia(1, localInertia);
 		
-		btRigidBody* body = new btRigidBody(1,0,box,localInertia);
+		//btRigidBody* body = new btRigidBody(1,0,box,localInertia);
 		
 		btTransform tr;
 		tr.setIdentity();
 		//tr.setOrigin(positions[i]);
-		body->setCenterOfMassTransform(tr);
+		//body->setCenterOfMassTransform(tr);
 		
 		//Set Angular velocity of the box
-		body->setAngularVelocity(btVector3(0,0,100));
+		//body->setAngularVelocity(btVector3(0,0,100));
                 //Set Linear velocity of the box
-		body->setLinearVelocity(btVector3(0,.2,0));
-		body->setFriction(btSqrt(1));
+		//body->setLinearVelocity(btVector3(0,.2,0));
+		//body->setFriction(btSqrt(1));
 		
 		//m_dynamicsWorld->addRigidBody(body);
 		//tgWorld->addRigidBody(body);
 		
-		body->setDamping(0.00001f,0.0001f);
+		//body->setDamping(0.00001f,0.0001f);
 
 		
 	}

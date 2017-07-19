@@ -74,6 +74,14 @@ public:
     virtual ~threeBarModel();
     void	initPhysics();
     void	exitPhysics();
+
+    //static DemoApplication* Create()
+    //{
+	 //   threeBarModel* demo = new threeBarModel();
+	//    demo->myinit();
+	//    demo->initPhysics();
+	 //   return demo;
+    //}
     
     /**
      * Create the model. Place the rods and strings into the world
