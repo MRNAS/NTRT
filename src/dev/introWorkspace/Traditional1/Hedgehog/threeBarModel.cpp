@@ -166,6 +166,56 @@ void threeBarModel::addRods(tgStructure& s)
     // s.addPair( 1,  5, "rod");
     // s.addPair( 2,  3, "rod");
 }
+// GYRO DEMO
+
+
+void	threeBarModel::initPhysics()
+{
+	for (int i=0;i<1;i++)
+	{
+		
+		//ISSUES HERE
+		//btCylinderShapeZ* top  = new btCylinderShapeZ(btVector3(1,1,0.125));
+		//btCapsuleShapeZ* pin  = new btCapsuleShapeZ(0.05,1.5);
+		tgBox* box= new tgBox(btVector3(1 ,1 ,1 ) );
+		//top->setMargin(0.01);
+		//pin->setMargin(0.01);
+		box->setMargin(0.01);
+		//btCompoundShape* compound = new btCompoundShape();
+		//compound->addChildShape(btTransform::getIdentity(),top);
+		//compound->addChildShape(btTransform::getIdentity(),pin);
+		//compound->addChildShape(btTransform::getIdentity(),box);
+		btVector3 localInertia;
+		//top->calculateLocalInertia(1,localInertia);
+		//box->calculateLocalInertia(1, localInertia);
+		
+		btRigidBody* body = new btRigidBody(1,0,box,localInertia);
+		
+		btTransform tr;
+		tr.setIdentity();
+		//tr.setOrigin(positions[i]);
+		body->setCenterOfMassTransform(tr);
+		
+		//Set Angular velocity of the box
+		body->setAngularVelocity(btVector3(0,0,100));
+                //Set Linear velocity of the box
+		body->setLinearVelocity(btVector3(0,.2,0));
+		body->setFriction(btSqrt(1));
+		
+		//m_dynamicsWorld->addRigidBody(body);
+		//tgWorld->addRigidBody(body);
+		
+		body->setDamping(0.00001f,0.0001f);
+
+		
+	}
+
+}
+
+//}
+
+//GYRO DEMO
+
 
 //void threeBarModel::addActuators(tgStructure& s)
 //{

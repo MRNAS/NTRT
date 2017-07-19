@@ -72,6 +72,8 @@ public:
      * Teardown handles everything else.
      */
     virtual ~threeBarModel();
+    void	initPhysics();
+    void	exitPhysics();
     
     /**
      * Create the model. Place the rods and strings into the world

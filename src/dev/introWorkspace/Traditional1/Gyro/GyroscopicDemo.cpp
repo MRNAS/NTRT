@@ -109,7 +109,7 @@ void	GyroscopicDemo::initPhysics()
 		body->setCenterOfMassTransform(tr);
 		
 		//Set Angular velocity of the box
-		body->setAngularVelocity(btVector3(0,0,1));
+		body->setAngularVelocity(btVector3(0,0,100));
                 //Set Linear velocity of the box
 		body->setLinearVelocity(btVector3(0,.2,0));
 		body->setFriction(btSqrt(1));

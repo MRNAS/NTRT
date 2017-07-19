@@ -49,46 +49,74 @@
  * @param[in] argv argv[0] is the executable name
  * @return 0
  */
+ 
+ //HILLY TERRAIN
+/**int main(int argc, char** argv)
+*{
+*	std::cout << "App3Bar" << std::endl;
+*#if (0)
+*    // First create the ground and world. Specify ground rotation in radians
+*	const double yaw = 0.0;
+*	const double pitch = 0.0;
+*	const double roll = 0.0;
+*	const tgBoxGround::Config groundConfig(btVector3(yaw, pitch, roll));
+*
+*    // the world will delete this
+*	tgBoxGround* ground = new tgBoxGround(groundConfig);
+*#else //terra
+*    btVector3 eulerAngles=btVector3(0.0, 0.0, 0.0); //te
+*   btScalar friction = 0.5; //te
+*   btScalar restitution = 0.0; //te
+*   // Size doesn't affect hilly terrain
+*   btVector3 size = btVector3(0.0, 0.1, 0.0);
+*   btVector3 origin = btVector3(0.0, 0.0, 0.0);
+*   size_t nx = 100;
+*   size_t ny = 100;
+*   double margin = 0.5;
+*   double triangleSize = 5.0;
+*   double waveHeight = 3.0;
+*   double offset = 0.0;
+*    tgHillyGround::Config groundConfig(eulerAngles, friction, restitution,
+*                                    size, origin, nx, ny, margin, triangleSize,
+*                                    waveHeight, offset);
+*
+*    tgHillyGround* ground = new tgHillyGround(groundConfig);
+*
+*
+*#endif
+*    //double sf = 10; terra change
+*    //double gravity = 9.81*sf; terra change
+*	const tgWorld::Config config(98.1); // gravity, cm/sec^2 98.1
+*	tgWorld world(config, ground);
+*
+*/
+
+//HILLY TERRAIN
+
+//NORMAL TERRAIN
 int main(int argc, char** argv)
 {
-	std::cout << "App3Bar" << std::endl;
-#if (0)
+    std::cout << "App3Bar" << std::endl;
+
     // First create the ground and world. Specify ground rotation in radians
-	const double yaw = 0.0;
-	const double pitch = 0.0;
-	const double roll = 0.0;
-	const tgBoxGround::Config groundConfig(btVector3(yaw, pitch, roll));
-
+    const double yaw = 0.0;
+    const double pitch = 0.0;
+    const double roll = 0.0;
+    const tgBoxGround::Config groundConfig(btVector3(yaw, pitch, roll));
     // the world will delete this
-	tgBoxGround* ground = new tgBoxGround(groundConfig);
-#else //terra
-    btVector3 eulerAngles=btVector3(0.0, 0.0, 0.0); //te
-   btScalar friction = 0.5; //te
-   btScalar restitution = 0.0; //te
-   // Size doesn't affect hilly terrain
-   btVector3 size = btVector3(0.0, 0.1, 0.0);
-   btVector3 origin = btVector3(0.0, 0.0, 0.0);
-   size_t nx = 100;
-   size_t ny = 100;
-   double margin = 0.5;
-   double triangleSize = 5.0;
-   double waveHeight = 3.0;
-   double offset = 0.0;
-    tgHillyGround::Config groundConfig(eulerAngles, friction, restitution,
-                                    size, origin, nx, ny, margin, triangleSize,
-                                    waveHeight, offset);
+    tgBoxGround* ground = new tgBoxGround(groundConfig);
+    
+    double sf = 10;
+    double gravity = 9.81*sf;
+    const tgWorld::Config config(gravity); // gravity, cm/sec^2
+    tgWorld world(config, ground);
 
-    tgHillyGround* ground = new tgHillyGround(groundConfig);
+//NORMAL TERRAIN
 
-#endif
-    //double sf = 10; terra change
-    //double gravity = 9.81*sf; terra change
-	const tgWorld::Config config(98.1); // gravity, cm/sec^2 98.1
-	tgWorld world(config, ground);
 
     // Second create the view
-	const double timestep_physics =1.0/1000.0; // seconds
-	const double timestep_graphics = 1.f/1000.f; // seconds
+	const double timestep_physics =0.001; // seconds
+	const double timestep_graphics = 1.f/60.f; // seconds
 	tgSimViewGraphics view(world, timestep_physics, timestep_graphics);
 
     // Third create the simulation
