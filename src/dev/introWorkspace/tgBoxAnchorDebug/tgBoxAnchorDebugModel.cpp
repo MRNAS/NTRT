@@ -187,6 +187,50 @@ void tgBoxAnchorDebugModel::setup(tgWorld& world)
 	std::endl;
     }
     */
+    btVector3 positions[2] = {
+		btVector3(0.8,-2,2),
+		btVector3(0.8,2,2)
+	};
+	
+	   tgBuildSpec spec;
+   // spec.addBuilder("rod", new tgRodInfo(rodConfig));
+	
+    for( int currentIndex = 0; currentIndex < 1; currentIndex++ )
+    {
+    btScalar yaw = 1.0;
+    btScalar roll = 1.0;
+    btScalar pitch = 1.0;
+    
+    btBoxShape* box = new btBoxShape( btVector3(yaw, roll, pitch) );
+    
+    box->setMargin(0.01);
+    
+    btCompoundShape* compound = new btCompoundShape();
+    compound->addChildShape(btTransform::getIdentity(),box);
+    
+    btVector3 localInertia;
+    box->calculateLocalInertia(1, localInertia);
+
+    btRigidBody* body = new btRigidBody(1,0,compound,localInertia);
+
+
+    btTransform tr;
+    tr.setIdentity();
+    tr.setOrigin(positions[currentIndex]);
+    body->setCenterOfMassTransform(tr);
+		
+    body->setAngularVelocity(btVector3(0,0,10));
+    body->setLinearVelocity(btVector3(0,.2,0));
+    body->setFriction(btSqrt(1));
+    
+    
+	tgTags tgObject;
+	
+	tgRod* tgRodObject = new tgRod( body, tgObject, 1.0 );
+	
+	//spec.addBuilder("rod", new tgRodInfo(  tgRodObject ) );
+    }
+    
 
     // Add a rotation. This is needed if the ground slopes too much,
     // otherwise  glitches put a rod below the ground.
@@ -197,12 +241,12 @@ void tgBoxAnchorDebugModel::setup(tgWorld& world)
     */
 
     // Create the build spec that uses tags to turn the structure into a real model
-    tgBuildSpec spec;
-    spec.addBuilder("rod", new tgRodInfo(rodConfig));
+   // tgBuildSpec spec; WE COMMENT ThIS OUT
+    // spec.addBuilder("rod", new tgRodInfo(rodConfig)); THIS TOO
     //spec.addBuilder("muscle", new tgBasicActuatorInfo(muscleConfig));
     
     // Create your structureInfo
-    tgStructureInfo structureInfo(s, spec);
+    tgStructureInfo structureInfo(s, spec); 
 
     // Use the structureInfo to build ourselves
     structureInfo.buildInto(*this, world);
