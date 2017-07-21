@@ -32,6 +32,21 @@
 #include "tgcreator/tgRodInfo.h"
 #include "tgcreator/tgStructure.h"
 #include "tgcreator/tgStructureInfo.h"
+#include "core/tgCast.h"
+#include "core/tgSpringCableActuator.h"
+#include "core/tgBox.h"
+#include "core/tgRod.h"
+#include "core/tgSphere.h"
+#include "core/tgString.h"
+#include "tgcreator/tgBuildSpec.h"
+#include "tgcreator/tgBasicActuatorInfo.h"
+#include "tgcreator/tgRigidAutoCompound.h"
+#include "tgcreator/tgRodInfo.h"
+#include "tgcreator/tgBoxInfo.h"
+#include "tgcreator/tgSphereInfo.h"
+#include "tgcreator/tgStructure.h"
+#include "tgcreator/tgStructureInfo.h"
+#include "tgcreator/tgUtil.h"
 // The Bullet Physics library
 #include "LinearMath/btVector3.h"
 // The C++ Standard Library
@@ -141,6 +156,7 @@ void tgBoxAnchorDebugModel::setup(tgWorld& world)
     // Start creating the structure
     tgStructure s;
     addNodes(s);
+    addRods(s);
 
     /*
     // DEBUGGING
@@ -149,7 +165,7 @@ void tgBoxAnchorDebugModel::setup(tgWorld& world)
       s.getNodes() << std::endl;
     */
     
-    addRods(s);
+    //addRods(s); COMMENTED THIS OUT
     //addActuators(s); remove actuators
 
     /*
@@ -187,29 +203,32 @@ void tgBoxAnchorDebugModel::setup(tgWorld& world)
 	std::endl;
     }
     */
+    
+    /*
     btVector3 positions[2] = {
 		btVector3(0.8,-2,2),
 		btVector3(0.8,2,2)
 	};
 	
-	   tgBuildSpec spec;
-   // spec.addBuilder("rod", new tgRodInfo(rodConfig));
+   //tgBuildSpec spec;
+   //spec.addBuilder("rod", new tgRodInfo(rodConfig));
 	
     for( int currentIndex = 0; currentIndex < 1; currentIndex++ )
     {
     btScalar yaw = 1.0;
     btScalar roll = 1.0;
     btScalar pitch = 1.0;
+    tgTags tgObject;
     
-    btBoxShape* box = new btBoxShape( btVector3(yaw, roll, pitch) );
+    tgRod *rod = new tgRod(btRigidBody, tgObject, yaw);
     
-    box->setMargin(0.01);
+    //box->setMargin(0.01);
     
     btCompoundShape* compound = new btCompoundShape();
-    compound->addChildShape(btTransform::getIdentity(),box);
+    compound->addChildShape(btTransform::getIdentity(),rod);
     
     btVector3 localInertia;
-    box->calculateLocalInertia(1, localInertia);
+    rod>calculateLocalInertia(1, localInertia);
 
     btRigidBody* body = new btRigidBody(1,0,compound,localInertia);
 
@@ -223,15 +242,26 @@ void tgBoxAnchorDebugModel::setup(tgWorld& world)
     body->setLinearVelocity(btVector3(0,.2,0));
     body->setFriction(btSqrt(1));
     
-    
-	tgTags tgObject;
+    */
 	
-	tgRod* tgRodObject = new tgRod( body, tgObject, 1.0 );
 	
-	//spec.addBuilder("rod", new tgRodInfo(  tgRodObject ) );
+	//tgRod* tgRodObject = new tgRod( body, tgObject, 1.0 );
+	/*
+	//added
+	/*
+    const double density = 4.2 / 3000.0; // kg / length^3 - see app for length
+    const double radius = 0.5;
+    const double h  = 1.5;
+    const tgBox::Config rodConfig(radius, density);
+    tgBuildSpec spec;
+    spec.addBuilder("rod", new tgBoxInfo(rodConfig));
     }
-    
-
+    */
+     // Create your structureInfo
+    //tgStructureInfo structureInfo(tgRodObject, spec);
+    // Use the structureInfo to build ourselves
+    //structureInfo.buildInto(*this, world);
+      //added
     // Add a rotation. This is needed if the ground slopes too much,
     // otherwise  glitches put a rod below the ground.
     /*btVector3 rotationPoint = btVector3(0, 0, 0); // origin
@@ -241,22 +271,24 @@ void tgBoxAnchorDebugModel::setup(tgWorld& world)
     */
 
     // Create the build spec that uses tags to turn the structure into a real model
-   // tgBuildSpec spec; WE COMMENT ThIS OUT
-    // spec.addBuilder("rod", new tgRodInfo(rodConfig)); THIS TOO
+    
+    tgBuildSpec spec; //WE COMMENT ThIS OUT
+    spec.addBuilder("rod", new tgRodInfo(rodConfig)); //THIS TOO
     //spec.addBuilder("muscle", new tgBasicActuatorInfo(muscleConfig));
     
+    
     // Create your structureInfo
-    tgStructureInfo structureInfo(s, spec); 
+    tgStructureInfo structureInfo(s, spec); //Commented out
 
     // Use the structureInfo to build ourselves
-    structureInfo.buildInto(*this, world);
+   structureInfo.buildInto(*this, world); //Commented out
 
     // We could now use tgCast::filter or similar to pull out the
     // models (e.g. muscles) that we want to control. 
     //allActuators = tgCast::filter<tgModel, tgBasicActuator> (getDescendants()); remove act
 
     // call the onSetup methods of all observed things e.g. controllers
-    //notifySetup();
+    notifySetup();
 
     // Actually setup the children
     tgModel::setup(world);
