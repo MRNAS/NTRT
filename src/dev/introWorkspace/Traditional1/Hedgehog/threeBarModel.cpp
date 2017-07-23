@@ -168,7 +168,7 @@ void threeBarModel::addRods(tgStructure& s)
 }
 // GYRO DEMO
 
-
+/*
 void	threeBarModel::initPhysics()
 {
 	for (int i=0;i<1;i++)
@@ -213,7 +213,7 @@ void	threeBarModel::initPhysics()
 }
 
 //}
-
+*/
 //GYRO DEMO
 
 
