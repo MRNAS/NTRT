@@ -80,6 +80,7 @@ int main(int argc, char** argv)
     // This constructor for TensegrityModel takes the 'debugging' flag as the
     // second argument.
     TensegrityModel* const myModel = new TensegrityModel(argv[1],false);
+    s.move(btVector3(0, 10, 0));
 
     // Attach a controller to the model, if desired.
     // This is a controller that interacts with a generic TensegrityModel as

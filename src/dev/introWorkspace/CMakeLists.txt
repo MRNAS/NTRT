@@ -5,5 +5,6 @@ Project(introWorkspace)
 subdirs(
   tgBoxAnchorDebug
   Traditional
+  Traditional1
 )
 

@@ -34,7 +34,7 @@
 #include <vector>
 
 // Forward declarations
-//class btRigidBody;
+class btRigidBody;
 
 /**
  * A box is a rigid body. Length is defined by nodes. Width, height and density

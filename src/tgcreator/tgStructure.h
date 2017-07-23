@@ -30,6 +30,14 @@
 // This library
 #include "tgNodes.h"
 #include "tgPairs.h"
+
+//Bullet Library
+//#include "env/include/bullet/LinearMath/btVector3.h"
+//#include "LinearMath/btTransform.h"
+//#include "LinearMath/btMatrix3x3.h"
+//#include "btCollisionMargin.h"
+//#include "LinearMath/btAlignedObjectArray.h"
+
 // The NTRT Core Library
 #include "core/tgTaggable.h"
 // The C++ Standard Library
@@ -80,6 +88,8 @@ public:
      * Add a pair that connects two of our nodes together
      */
     void addPair(int fromNodeIdx, int toNodeIdx, std::string tags = "");
+    //Rotation
+    //virtual void	calculateLocalInertia(btScalar mass,btVector3& inertia) const;
     
     /**
      * Add a pair that connects any two vector3s 

@@ -19,12 +19,14 @@
 #ifndef THREE_BAR_MODEL_H
 #define THREE_BAR_MODEL_H
 
-/**
- * @file 3BarModel.h
- * @brief Defines a 3 strut 9 string tensegrity model
- * @author Edward Zhu
- * $Id$
- */
+// Dependencies coming from Gyro
+#ifdef _WINDOWS
+#else
+#include "GlutDemoApplication.h"
+#define PlatformDemoApplication GlutDemoApplication
+#endif
+
+// Dependencies coming from Gyro
 
 // This library
 #include "core/tgModel.h"
@@ -39,11 +41,6 @@
 #include "tgcreator/tgRodInfo.h"
 #include "tgcreator/tgStructure.h"
 #include "tgcreator/tgStructureInfo.h"
-#include "BulletDynamics/Vehicle/btRaycastVehicle.h"
-#include "BulletDynamics/ConstraintSolver/btHingeConstraint.h"
-#include "BulletDynamics/ConstraintSolver/btSliderConstraint.h"
-
-#include "GlutDemoApplication.h"
 
 // The C++ Standard Library
 #include <vector>
@@ -75,6 +72,16 @@ public:
      * Teardown handles everything else.
      */
     virtual ~threeBarModel();
+    void	initPhysics();
+    void	exitPhysics();
+
+    //static DemoApplication* Create()
+    //{
+	 //   threeBarModel* demo = new threeBarModel();
+	//    demo->myinit();
+	//    demo->initPhysics();
+	 //   return demo;
+    //}
     
     /**
      * Create the model. Place the rods and strings into the world

@@ -11,8 +11,7 @@ link_libraries(tgcreator
 		yaml-cpp
 		TensegrityModel)
 
-add_executable(App3BarTraditional
-    threeBarModel.cpp
-    App3BarTraditional.cpp
+add_executable(Gyro
+    GyroscopicDemo.cpp
+    main.cpp
 ) 
-

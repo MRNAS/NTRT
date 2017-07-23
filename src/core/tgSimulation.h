@@ -82,6 +82,10 @@ public:
      */
     void addModel(tgModel* pModel);
     
+<<<<<<< HEAD
+=======
+    
+>>>>>>> manueltest1
     /**
      * Add an obstacle to the simulation.
      * Obstacles are deleted upon reset.
