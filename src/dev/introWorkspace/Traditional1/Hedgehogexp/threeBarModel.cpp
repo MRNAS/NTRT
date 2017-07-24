@@ -103,8 +103,8 @@ namespace
        10000,       // max tension
        1,         // target actuator velocity
 	//Box
-	15.0, // width (dm?)
-        15.0, // height (dm?)
+	1.0, // width (dm?)
+        1.0, // height (dm?)
         //0.0,  density (kg / length^3)
         1.0,  // friction (unitless)
         0.01, // rollFriction (unitless)
@@ -313,8 +313,8 @@ void threeBarModel::setup(tgWorld& world)
     //addActuators(s);
     
     // Move the structure so it dohgesn't start in the ground
-    y.move(btVector3(-50,50, -50));
-    s.move(btVector3(50,50, 50));
+    y.move(btVector3(-5,10, -5));
+    s.move(btVector3(5,10, 5));
   //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
     //btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
     //s.addRotation(btVector3(0,10,0),btQuaternion(1,2,4,3));
@@ -332,7 +332,7 @@ void threeBarModel::setup(tgWorld& world)
     tgStructureInfo structureInfos(y, spec); //Hedgehog
 
     // Use the structureInfo to build ourselves
-    structureInfo.buildInto(*this, world); //TEnsegrity
+    structureInfo.buildInto(*this, world); //Tensegrity
     structureInfos.buildInto(*this, world); //Hedgehog
 
     // Get the rod rigid bodies for controller
@@ -397,49 +397,49 @@ void threeBarModel::teardown()
 
 void threeBarModel::addNodes(tgStructure& y) {
 #if (0)
-    const int nBoxes = 4; 
+    const int nBoxes = 1; 
 #endif // Suppress compiler warning unused variable
     // Accumulating rotation on boxes
-    btVector3 rotationPoint = origin;
-    btVector3 rotationAxis = btVector3(0, 1, 0);  // y-axis
-    double rotationAngle = M_PI/2;
+    //btVector3 rotationPoint = origin; Not necessary Only need one box
+    //btVector3 rotationAxis = btVector3(0, 1, 0);  // y-axis
+    //double rotationAngle = M_PI/2;
 
     addBoxNodes();
-    addBoxNodes();
-    addBoxNodes();
-    addBoxNodes();
+    //addBoxNodes();
+    //addBoxNodes();
+    //addBoxNodes();
     
         for(std::size_t i=0;i<nodes.size();i+=2) {
         y.addNode(nodes[i]);
         y.addNode(nodes[i+1]);
-        y.addRotation(rotationPoint, rotationAxis, rotationAngle);
+        //y.addRotation(rotationPoint, rotationAxis, rotationAngle);
         y.addPair(i, i+1, "box");
     }
 	
-    y.move(btVector3(0, 50, 0)); // Sink boxes into the ground
+    //y.move(btVector3(0, 50, 0)); // Sink boxes into the ground
 }
 
 //Box Extra
 void threeBarModel::addBoxNodes() {
     tgNode node;
-    
-    double x1 = 20; // Smaller x values leads to a narrower crater
-    double x2 = 20;
-    double y1 = -10;
-    double y2 = 25;
-    double z1 = 0;
-    double z2 = 0;
-
+  
+    double x1 = 2; // Smaller x values leads to a narrower crater
+    double x2 = 1;
+    double y1 = 2;
+    double y2 = 1;
+    double z1 = 1;
+    double z2 = sqrt(3);
+ /* 
     btVector3 rotationPoint = btVector3((x2-x1)/2, (y2-y1)/2, (z2-z1)/2); //Halfway between nodes
     btVector3 rotationAxis = btVector3(0, 1, 0);  // y-axis
     double rotationAngle = 0; // Must != 0 for actual change
-
+*/
     node = tgNode(x1, y1, z1, "node");
-    node.addRotation(rotationPoint, rotationAxis, rotationAngle);
+    //node.addRotation(rotationPoint, rotationAxis, rotationAngle);
     nodes.push_back(node);
 
     node = tgNode(x2, y2, z2, "node");
-    node.addRotation(rotationPoint, rotationAxis, rotationAngle);
+    //node.addRotation(rotationPoint, rotationAxis, rotationAngle);
     nodes.push_back(node);
      
 }
