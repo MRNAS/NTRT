@@ -17,15 +17,14 @@
 */
 
 /**
- * @file App3BarTraditional.cpp
- * @brief Contains the definition function main() for the Three strut
- * tensegrity prism example application (using traditional NTRT system).
- * @author Edward Zhu, Drew Sabelhaus
+ * @file AppTensegrityHedgehog.cpp
+ * @brief Contains the definition function main() for Integration of Hedgehog and Tensegrity Structure
+ * @author Manuel Retana
  * $Id$
  */
 // include "LengthController.h"
 // This application
-#include "threeBarModel.h"
+#include "TensegrityHedgehogModel.h"
 
 // This library
 #include "core/terrain/tgBoxGround.h"
@@ -124,7 +123,7 @@ int main(int argc, char** argv)
 
     // Fourth create the models with their controllers and add the models to the
     // simulation
-	threeBarModel* const myModel = new threeBarModel();
+	TensegrityHedgehogModel* const myModel = new TensegrityHedgehogModel();
     
     // Create the controller
     // FILL IN 5.4 HERE

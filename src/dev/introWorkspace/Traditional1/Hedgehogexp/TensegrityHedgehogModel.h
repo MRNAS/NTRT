@@ -16,8 +16,8 @@
  * governing permissions and limitations under the License.
 */
 
-#ifndef THREE_BAR_MODEL_H
-#define THREE_BAR_MODEL_H
+#ifndef TENSEGRITY_HEDGEHOG_MODEL_H
+#define TENSEGRITY_HEDGEHOG_MODEL_H
 
 // Dependencies coming from Gyro
 /*#ifdef _WINDOWS
@@ -55,12 +55,12 @@ class tgStructure;
 class tgWorld;
 
 /**
- * A class that constructs a three bar tensegrity prism using the tools
- * in tgcreator. This iteration avoids using a controller and instead
- * uses the new (to v1.1) ability to define pretension in a
- * tgBasicActuator's constructor
+ * @file Tensegrity_HedgehogModel.h
+ * @brief Contains the the class HedgehogTensegrity.h
+  * @author Manuel Retana
+ * $Id$
  */
-class threeBarModel : public tgSubject<threeBarModel>, public tgModel
+class TensegrityHedgehogModel : public tgSubject<TensegrityHedgehogModel>, public tgModel
 {
 public: 
     
@@ -68,10 +68,10 @@ public:
      * The only constructor. Configuration parameters are within the
      * .cpp file in this case, not passed in. 
      */
-    threeBarModel();
+    TensegrityHedgehogModel();
 
 //Box addition
-    threeBarModel(btVector3 origin);
+    TensegrityHedgehogModel(btVector3 origin);
 //Box addition
 
     
@@ -79,7 +79,7 @@ public:
      * Destructor. Deletes controllers, if any were added during setup.
      * Teardown handles everything else.
      */
-    virtual ~threeBarModel();
+    virtual ~TensegrityHedgehogModel();
     
     /**
      * Create the model. Place the rods and strings into the world
@@ -185,4 +185,4 @@ private:
     std::vector<tgRod*> allRods;
 };
 
-#endif  // THREE_BAR_MODEL_H
+#endif  // TENSEGRITY_HEDGEHOG_MODEL_H

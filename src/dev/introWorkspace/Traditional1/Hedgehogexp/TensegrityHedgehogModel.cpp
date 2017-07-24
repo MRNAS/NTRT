@@ -17,13 +17,14 @@
 */
 
 /**
- * @file 3BarModel.cpp
- * @brief Contains the definition of the members of the class threeBarModel.
+ * @file Tensegrity_HedgehogModel.cpp
+ * @brief Contains the definition of the members of the class HedgehogTensegrity
+  * @author Manuel Retana
  * $Id$
  */
 
 // This module
-#include "threeBarModel.h"
+#include "TensegrityHedgehogModel.h"
 #include "core/tgString.h"
 // The Bullet Physics library
 //Box add
@@ -113,20 +114,20 @@ namespace
   };
 } // namespace
 
-threeBarModel::threeBarModel() : tgModel() 
+TensegrityHedgehogModel::TensegrityHedgehogModel() : tgModel() 
 {
 	origin = btVector3(0,0,0); //Box
 }
 //box
-threeBarModel::threeBarModel(btVector3 center) : tgModel() 
+TensegrityHedgehogModel::TensegrityHedgehogModel(btVector3 center) : tgModel() 
 {
 	origin = btVector3(center.getX(), center.getY(), center.getZ()); 
 }
 //box
-threeBarModel::~threeBarModel()
+TensegrityHedgehogModel::~TensegrityHedgehogModel()
 {
 }
-/*void threeBarModel::addNodes(tgStructure& s) {
+/*void TensegrityHedgehogModel::addNodes(tgStructure& s) {
 #if (0)
     const int nBoxes = 4; 
 #endif // Suppress compiler warning unused variable
@@ -148,7 +149,7 @@ threeBarModel::~threeBarModel()
     }
     s.move(btVector3(0, 50, 0)); // Sink boxes into the ground
 */
-void threeBarModel::addNodes(tgStructure& s,
+void TensegrityHedgehogModel::addNodes(tgStructure& s,
                             double edge,
                             double width,
                             double height)
@@ -199,7 +200,7 @@ void threeBarModel::addNodes(tgStructure& s,
 //tr.setRotation(quat);
 //threeBarModel->setCenterOfMassTransform(tr);
 
-void threeBarModel::addRods(tgStructure& s)
+void TensegrityHedgehogModel::addRods(tgStructure& s)
 {
     s.addPair( 0,  4, tgString("rod num", 0));
     s.addPair( 1,  5, tgString("rod num", 1));
@@ -269,8 +270,7 @@ void	threeBarModel::initPhysics()
 */
 //GYRO DEMO
 
-//Not necessary
-//void threeBarModel::addActuators(tgStructure& s)
+//void TensegrityHedgehogModel::addActuators(tgStructure& s)
 //{
 //    // Bottom Triangle
 //    s.addPair(0, 1, tgString("actuator num", 0));
@@ -280,7 +280,6 @@ void	threeBarModel::initPhysics()
 //    // Top
 //    s.addPair(3, 4, tgString("actuator num", 3));
 //    s.addPair(4, 5, tgString("actuator num", 4));
-//    // FILL IN LINE 5.2 HERE
 //    s.addPair(5, 3, tgString("actuator num", 5));
 
     //Edges
@@ -289,7 +288,7 @@ void	threeBarModel::initPhysics()
 //    s.addPair(2, 5, tgString("actuator num", 8));
 //}
 
-void threeBarModel::setup(tgWorld& world)
+void TensegrityHedgehogModel::setup(tgWorld& world)
 {
     const tgBox::Config boxConfig(c.width, c.height, c.density, c.friction, c.rollFriction, c.restitution); //box
     // Define the configurations of the rods and strings
@@ -336,9 +335,9 @@ void threeBarModel::setup(tgWorld& world)
     structureInfos.buildInto(*this, world); //Hedgehog
 
     // Get the rod rigid bodies for controller
-    std::vector<tgRod*> rods = threeBarModel::find<tgRod>("rod");
+    std::vector<tgRod*> rods = TensegrityHedgehogModel::find<tgRod>("rod");
     for (int i = 0; i < rods.size(); i++) {
-        allRods.push_back(threeBarModel::find<tgRod>(tgString("rod num", i))[0]);    
+        allRods.push_back(TensegrityHedgehogModel::find<tgRod>(tgString("rod num", i))[0]);    
     }
         
     // Get the actuators for controller
@@ -354,7 +353,7 @@ void threeBarModel::setup(tgWorld& world)
     tgModel::setup(world);
 }
 
-void threeBarModel::step(double dt)
+void TensegrityHedgehogModel::step(double dt)
 {
     // Precondition
     if (dt <= 0.0)
@@ -369,7 +368,7 @@ void threeBarModel::step(double dt)
     }
 }
 
-void threeBarModel::onVisit(tgModelVisitor& r)
+void TensegrityHedgehogModel::onVisit(tgModelVisitor& r)
 {
     // Example: m_rod->getRigidBody()->dosomething()...
     tgModel::onVisit(r);
@@ -380,12 +379,12 @@ void threeBarModel::onVisit(tgModelVisitor& r)
 //    return allActuators;
 //}
 
-std::vector<tgRod*>& threeBarModel::getAllRods()
+std::vector<tgRod*>& TensegrityHedgehogModel::getAllRods()
 {
     return allRods;
 }
     
-void threeBarModel::teardown()
+void TensegrityHedgehogModel::teardown()
 {
     notifyTeardown();
     tgModel::teardown();
@@ -395,7 +394,7 @@ void threeBarModel::teardown()
 //BOX Extra
 // Nodes: center points of opposing faces of rectangles
 
-void threeBarModel::addNodes(tgStructure& y) {
+void TensegrityHedgehogModel::addNodes(tgStructure& y) {
 #if (0)
     const int nBoxes = 1; 
 #endif // Suppress compiler warning unused variable
@@ -420,7 +419,7 @@ void threeBarModel::addNodes(tgStructure& y) {
 }
 
 //Box Extra
-void threeBarModel::addBoxNodes() {
+void TensegrityHedgehogModel::addBoxNodes() {
     tgNode node;
   
     double x1 = 2; // Smaller x values leads to a narrower crater
