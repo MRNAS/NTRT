@@ -11,7 +11,7 @@ link_libraries(tgcreator
 		yaml-cpp
 		TensegrityModel)
 
-add_executable(Hedgehog
+add_executable(Hedgehogexp
     threeBarModel.cpp
     App3BarTraditional.cpp
 ) 
