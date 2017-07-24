@@ -167,7 +167,7 @@ private:
          * based on construction parameters.
          * @param[in] s: the tgStructure that we're building into
          */
-    void addNodes(tgStructure& s);
+    void addNodes(tgStructure& y);
 /**
          * Determines the box nodes (center points of opposing box faces
          * Adds nodes to 'nodes' vector

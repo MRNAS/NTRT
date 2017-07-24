@@ -126,7 +126,28 @@ threeBarModel::threeBarModel(btVector3 center) : tgModel()
 threeBarModel::~threeBarModel()
 {
 }
+/*void threeBarModel::addNodes(tgStructure& s) {
+#if (0)
+    const int nBoxes = 4; 
+#endif // Suppress compiler warning unused variable
+    // Accumulating rotation on boxes
+    btVector3 rotationPoint = origin;
+    btVector3 rotationAxis = btVector3(0, 1, 0);  // y-axis
+    double rotationAngle = M_PI/2;
 
+    addBoxNodes();
+    addBoxNodes();
+    addBoxNodes();
+    addBoxNodes();
+    
+    for(std::size_t i=0;i<nodes.size();i+=2) {
+        s.addNode(nodes[i]);
+        s.addNode(nodes[i+1]);
+        s.addRotation(rotationPoint, rotationAxis, rotationAngle);
+        s.addPair(i, i+1, "box");
+    }
+    s.move(btVector3(0, 50, 0)); // Sink boxes into the ground
+*/
 void threeBarModel::addNodes(tgStructure& s,
                             double edge,
                             double width,
@@ -166,7 +187,7 @@ void threeBarModel::addNodes(tgStructure& s,
     s.addNode(0, 3.75, 2.5); // 14
     // top 12
     s.addNode(0, 3.75, -2.5); // 15
-    
+
 }
 
 
@@ -279,10 +300,11 @@ void threeBarModel::setup(tgWorld& world)
     
     // Create a structure that will hold the details of this model
     tgStructure s;
-    
+    tgStructure y;
+    addNodes(y); 
     // Add nodes to the structure
     addNodes(s, c.triangle_length, c.triangle_height, c.prism_height);
-    addNodes(s); //tgbox
+    //addNodes(s); //tgbox
     
     // Add rods to the structure
     addRods(s);
@@ -291,7 +313,8 @@ void threeBarModel::setup(tgWorld& world)
     //addActuators(s);
     
     // Move the structure so it dohgesn't start in the ground
-    s.move(btVector3(50,10, 5));
+    y.move(btVector3(-50,50, -50));
+    s.move(btVector3(50,50, 50));
   //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
     //btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
     //s.addRotation(btVector3(0,10,0),btQuaternion(1,2,4,3));
@@ -305,10 +328,12 @@ void threeBarModel::setup(tgWorld& world)
     //spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
     
     // Create your structureInfo
-    tgStructureInfo structureInfo(s, spec);
+    tgStructureInfo structureInfo(s, spec); //Tensegrity
+    tgStructureInfo structureInfos(y, spec); //Hedgehog
 
     // Use the structureInfo to build ourselves
-    structureInfo.buildInto(*this, world);
+    structureInfo.buildInto(*this, world); //TEnsegrity
+    structureInfos.buildInto(*this, world); //Hedgehog
 
     // Get the rod rigid bodies for controller
     std::vector<tgRod*> rods = threeBarModel::find<tgRod>("rod");
@@ -369,7 +394,8 @@ void threeBarModel::teardown()
 
 //BOX Extra
 // Nodes: center points of opposing faces of rectangles
-void threeBarModel::addNodes(tgStructure& s) {
+
+void threeBarModel::addNodes(tgStructure& y) {
 #if (0)
     const int nBoxes = 4; 
 #endif // Suppress compiler warning unused variable
@@ -383,14 +409,16 @@ void threeBarModel::addNodes(tgStructure& s) {
     addBoxNodes();
     addBoxNodes();
     
-    for(std::size_t i=0;i<nodes.size();i+=2) {
-        s.addNode(nodes[i]);
-        s.addNode(nodes[i+1]);
-        s.addRotation(rotationPoint, rotationAxis, rotationAngle);
-        s.addPair(i, i+1, "box");
+        for(std::size_t i=0;i<nodes.size();i+=2) {
+        y.addNode(nodes[i]);
+        y.addNode(nodes[i+1]);
+        y.addRotation(rotationPoint, rotationAxis, rotationAngle);
+        y.addPair(i, i+1, "box");
     }
-    s.move(btVector3(0, 50, 0)); // Sink boxes into the ground
+	
+    y.move(btVector3(0, 50, 0)); // Sink boxes into the ground
 }
+
 //Box Extra
 void threeBarModel::addBoxNodes() {
     tgNode node;
