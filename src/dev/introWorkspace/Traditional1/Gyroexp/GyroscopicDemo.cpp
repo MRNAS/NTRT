@@ -72,6 +72,9 @@ void	GyroscopicDemo::clientResetScene()
 	exitPhysics();
 	initPhysics();
 }
+
+//tgSimulation simulation(view);
+
 void	GyroscopicDemo::initPhysics()
 {
 	m_azi=90;
@@ -87,6 +90,7 @@ void	GyroscopicDemo::initPhysics()
 	setupEmptyDynamicsWorld();
 	m_dynamicsWorld->setGravity(btVector3(0,0,-9.8));
 	m_dynamicsWorld->setDebugDrawer(&gDebugDrawer);
+	
 
 
 	//btCollisionShape* groundShape = new btBoxShape(btVector3(btScalar(50.),btScalar(50.),btScalar(0.5)));
@@ -138,6 +142,7 @@ void	GyroscopicDemo::initPhysics()
 		body->setFriction(btSqrt(1));
 		
 		m_dynamicsWorld->addRigidBody(body);
+		
 		if (gyro[i])
 		{
 			body->setFlags(BT_ENABLE_GYROPSCOPIC_FORCE);
@@ -147,7 +152,8 @@ void	GyroscopicDemo::initPhysics()
 		}
 		body->setDamping(0.00001f,0.0001f);
 
-		
+		//simulation.addModel(body);
+		//simulation.run();
 	}
 
 }

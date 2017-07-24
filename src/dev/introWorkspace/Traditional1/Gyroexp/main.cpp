@@ -85,8 +85,8 @@ std::cout << "App3Bar" << std::endl;
     	simulation.run();
 //
 
-constraintDemo->initPhysics();
-	//constraintDemo->setDebugMode(btIDebugDraw::DBG_DrawConstraints+btIDebugDraw::DBG_DrawConstraintLimits);
+	constraintDemo->initPhysics();
+	constraintDemo->setDebugMode(btIDebugDraw::DBG_DrawConstraints+btIDebugDraw::DBG_DrawConstraintLimits);
     //Teardown is handled by delete, so that should be automatic
 	return 0; //TG added
     
