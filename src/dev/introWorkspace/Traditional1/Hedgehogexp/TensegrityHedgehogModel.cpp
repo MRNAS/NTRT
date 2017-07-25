@@ -93,7 +93,7 @@ namespace
     } c =
    {
        0.688,     // density (mass / length^3)
-       0.31,     // radius (length)
+       0.15,     // radius (length)
        1000.0,   // stiffness (mass / sec^2)
        50.0,     // damping (mass / sec)
        400.0,     // pretension (mass * length / sec^2)
@@ -156,38 +156,38 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s,
 {
     //Large box
     // bottom 1
-    s.addNode(-5, 0, 0); // 0
+    s.addNode(-10, 0, 0); // 0
     // bottom 2
-    s.addNode( 5, 0, 0); // 1
+    s.addNode( 10, 0, 0); // 1
     // bottom 3
-    s.addNode(0, 0, 5); // 2
+    s.addNode(0, 0, 10); // 2
     // bottom 4
-    s.addNode(0, 0, -5); // 3
+    s.addNode(0, 0, -10); // 3
     // top 1
-    s.addNode(-5, 5, 0); // 4
+    s.addNode(-10, 10, 0); // 4
     // top 2
-    s.addNode(5, 5, 0); // 5
+    s.addNode(10, 10, 0); // 5
     // top 3
-    s.addNode(0, 5, 5); // 6
+    s.addNode(0, 10, 10); // 6
     // top 4
-    s.addNode(0, 5, -5); // 7
+    s.addNode(0, 10, -10); // 7
     //Small Box
     // bottom 5
-    s.addNode(-2.5, 1.25, 0); // 8
+    s.addNode(-5, 2.5, 0); // 8
     // bottom 6
-    s.addNode( 2.5, 1.25, 0); // 9
+    s.addNode( 5, 2.5, 0); // 9
     // bottom 7
-    s.addNode(0, 1.25, 2.5); // 10
+    s.addNode(0, 2.5, 5); // 10
     // bottom 8
-    s.addNode(0, 1.25, -2.5); // 11
+    s.addNode(0, 2.5, -5); // 11
+    // top 5
+    s.addNode(-5, 7.5, 0); // 12
+    // top 7
+    s.addNode(5, 7.5, 0); // 13
+    // top 8
+    s.addNode(0, 7.5, 5); // 14
     // top 9
-    s.addNode(-2.5, 3.75, 0); // 12
-    // top 10
-    s.addNode(2.5, 3.75, 0); // 13
-    // top 11
-    s.addNode(0, 3.75, 2.5); // 14
-    // top 12
-    s.addNode(0, 3.75, -2.5); // 15
+    s.addNode(0, 7.5, -5); // 15
 
 }
 
@@ -202,6 +202,7 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s,
 
 void TensegrityHedgehogModel::addRods(tgStructure& s)
 {
+    //Tensegrity
     s.addPair( 0,  4, tgString("rod num", 0));
     s.addPair( 1,  5, tgString("rod num", 1));
     s.addPair( 2,  6, tgString("rod num", 2));
@@ -215,10 +216,41 @@ void TensegrityHedgehogModel::addRods(tgStructure& s)
     s.addPair( 5,  6, tgString("rod num", 10));
     s.addPair( 5,  7, tgString("rod num", 11));
 
+//Hedgehog Cover
+    s.addPair( 8,  12, tgString("rod num", 12));
+    s.addPair( 9,  13, tgString("rod num", 13));
+    s.addPair( 10,  14, tgString("rod num", 14));
+    s.addPair( 11,  15, tgString("rod num", 15));
+    s.addPair( 8,  10, tgString("rod num", 16));
+    s.addPair( 8,  11, tgString("rod num", 17));
+    s.addPair( 9,  10, tgString("rod num", 18));
+    s.addPair( 9,  11, tgString("rod num", 19));
+    s.addPair( 12,  14, tgString("rod num", 20));
+    s.addPair( 12,  15, tgString("rod num", 21));
+    s.addPair( 13,  14, tgString("rod num", 22));
+    s.addPair( 13,  15, tgString("rod num", 23));
+    //xpairs
+  //top
+    s.addPair( 12,  13, tgString("rod num", 24));
+    s.addPair( 14,  15, tgString("rod num", 25));
+    //bottom
+    s.addPair( 8,  9, tgString("rod num", 26));
+    s.addPair(10,  11, tgString("rod num", 27));
 
-    // s.addPair( 0,  4, "rod");
-    // s.addPair( 1,  5, "rod");
-    // s.addPair( 2,  3, "rod");
+    s.addPair( 9,  14, tgString("rod num", 28));
+    s.addPair( 10,  13, tgString("rod num", 29));
+    
+    s.addPair( 9,  15, tgString("rod num", 30));
+    s.addPair( 10,  12, tgString("rod num", 31));
+          
+    s.addPair( 8,  14, tgString("rod num", 32));
+    s.addPair( 11,  13, tgString("rod num", 33));
+//Still troubleshoot
+    s.addPair( 8,  15, tgString("rod num", 34));
+    s.addPair( 11,  12, tgString("rod num", 35));
+   
+
+
 }
 // GYRO DEMO
 
@@ -270,23 +302,21 @@ void	threeBarModel::initPhysics()
 */
 //GYRO DEMO
 
-//void TensegrityHedgehogModel::addActuators(tgStructure& s)
-//{
-//    // Bottom Triangle
-//    s.addPair(0, 1, tgString("actuator num", 0));
-//    s.addPair(1, 2, tgString("actuator num", 1));
-//    s.addPair(2, 0, tgString("actuator num", 2));
-//    
-//    // Top
-//    s.addPair(3, 4, tgString("actuator num", 3));
-//    s.addPair(4, 5, tgString("actuator num", 4));
-//    s.addPair(5, 3, tgString("actuator num", 5));
+void TensegrityHedgehogModel::addActuators(tgStructure& s)
+{
+    // Bottom
+    s.addPair(0, 8, tgString("actuator num", 0));
+    s.addPair(1, 9, tgString("actuator num", 1));
+    s.addPair(2, 10, tgString("actuator num", 2));
+    s.addPair(3, 11, tgString("actuator num", 3));
+ 
+    // Top
+    s.addPair(4, 12, tgString("actuator num", 4));
+    s.addPair(5, 13, tgString("actuator num", 5));
+    s.addPair(6, 14, tgString("actuator num", 6));
+    s.addPair(7, 15, tgString("actuator num", 7));
 
-    //Edges
-//    s.addPair(0, 3, tgString("actuator num", 6));
-//    s.addPair(1, 4, tgString("actuator num", 7));
-//    s.addPair(2, 5, tgString("actuator num", 8));
-//}
+}
 
 void TensegrityHedgehogModel::setup(tgWorld& world)
 {
@@ -294,8 +324,8 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     // Define the configurations of the rods and strings
     // Note that pretension is defined for this string
     const tgRod::Config rodConfig(c.radius, c.density);
-    //const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
-    //    c.hist, c.maxTension, c.targetVelocity);
+    const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
+       c.hist, c.maxTension, c.targetVelocity);
     
     // Create a structure that will hold the details of this model
     tgStructure s;
@@ -303,7 +333,6 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     addNodes(y); 
     // Add nodes to the structure
     addNodes(s, c.triangle_length, c.triangle_height, c.prism_height);
-    //addNodes(s); //tgbox
     
     // Add rods to the structure
     addRods(s);
@@ -312,8 +341,8 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     //addActuators(s);
     
     // Move the structure so it dohgesn't start in the ground
-    y.move(btVector3(-5,10, -5));
-    s.move(btVector3(5,10, 5));
+    y.move(btVector3(5,1.5, 5));
+    s.move(btVector3(5,0, 5));
   //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
     //btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
     //s.addRotation(btVector3(0,10,0),btQuaternion(1,2,4,3));
@@ -324,7 +353,7 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     spec.addBuilder("rod", new tgRodInfo(rodConfig));
     spec.addBuilder("box", new tgBoxInfo(boxConfig));//tg Box
 
-    //spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
+    spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
     
     // Create your structureInfo
     tgStructureInfo structureInfo(s, spec); //Tensegrity
@@ -341,10 +370,10 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     }
         
     // Get the actuators for controller
-    //std::vector<tgBasicActuator*> actuators = threeBarModel::find<tgBasicActuator>("actuator");
-    //for (int i = 0; i < rods.size(); i++) {
-    //    allActuators.push_back(threeBarModel::find<tgBasicActuator>(tgString("actuator num", i))[0]);    
-    //}
+    std::vector<tgBasicActuator*> actuators = TensegrityHedgehogModel::find<tgBasicActuator>("actuator");
+    for (int i = 0; i < rods.size(); i++) {
+        allActuators.push_back(TensegrityHedgehogModel::find<tgBasicActuator>(tgString("actuator num", i))[0]);    
+    }
 
     // Notify controllers that setup has finished.
     notifySetup();
@@ -374,10 +403,10 @@ void TensegrityHedgehogModel::onVisit(tgModelVisitor& r)
     tgModel::onVisit(r);
 }
 
-//std::vector<tgBasicActuator*>& threeBarModel::getAllActuators()
-//{
-//    return allActuators;
-//}
+std::vector<tgBasicActuator*>& TensegrityHedgehogModel::getAllActuators()
+{
+   return allActuators;
+}
 
 std::vector<tgRod*>& TensegrityHedgehogModel::getAllRods()
 {
@@ -427,7 +456,7 @@ void TensegrityHedgehogModel::addBoxNodes() {
     double y1 = 2;
     double y2 = 1;
     double z1 = 1;
-    double z2 = sqrt(3);
+    double z2 = 1.5;//sqrt(3);
  /* 
     btVector3 rotationPoint = btVector3((x2-x1)/2, (y2-y1)/2, (z2-z1)/2); //Halfway between nodes
     btVector3 rotationAxis = btVector3(0, 1, 0);  // y-axis

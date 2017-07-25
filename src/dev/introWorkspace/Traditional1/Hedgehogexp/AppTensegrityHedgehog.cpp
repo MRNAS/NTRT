@@ -126,11 +126,9 @@ int main(int argc, char** argv)
 	TensegrityHedgehogModel* const myModel = new TensegrityHedgehogModel();
     
     // Create the controller
-    // FILL IN 5.4 HERE
 	//LengthController* const myController = new LengthController();
 
     // Attach controller to the model
-    // FILL IN 5.6 HERE
 	//myModel->attach(myController);
 
     // Add the model to the world
