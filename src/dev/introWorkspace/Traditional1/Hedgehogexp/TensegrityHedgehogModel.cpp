@@ -103,7 +103,7 @@ namespace
        0.15,     // radius (length)
        1000.0,   // stiffness (mass / sec^2)
        50.0,     // damping (mass / sec)
-       400.0,     // pretension (mass * length / sec^2)
+       1200.0,     // pretension (mass * length / sec^2)
        10.0,     // triangle_length (length)
        10.0,     // triangle_height (length)
        20.0,     // prism_height (length)
@@ -111,8 +111,8 @@ namespace
        10000,       // max tension
        1,         // target actuator velocity
 	//Box
-	2.0, // width (dm?)
-        2.0, // length (dm?)
+	1.75, // width (dm?)
+        1.75, // length (dm?)
         //0.0,  density (kg / length^3)
         1.0,  // friction (unitless)
         0.01, // rollFriction (unitless)
@@ -177,24 +177,24 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s,
     // top 3
     s.addNode(0, 10, 10); // 6
     // top 4
-    s.addNode(0, 10, -10); // 7
-    //Small Box
+    s.addNode(0, 10, -10); // 7    
+//Small Box
     // bottom 5
-    s.addNode(-4, 3, 0); // 8
+    s.addNode(-3, 3, 0); // 8
     // bottom 6
-    s.addNode( 4, 3, 0); // 9
+    s.addNode( 3, 3, 0); // 9
     // bottom 7
-    s.addNode(0, 3, 4); // 10
+    s.addNode(0, 3, 3); // 10
     // bottom 8
-    s.addNode(0, 3, -4); // 11
+    s.addNode(0, 3, -3); // 11
     // top 5
-    s.addNode(-4, 7, 0); // 12
+    s.addNode(-3, 7, 0); // 12
     // top 7
-    s.addNode(4, 7, 0); // 13
+    s.addNode(3, 7, 0); // 13
     // top 8
-    s.addNode(0, 7, 4); // 14
+    s.addNode(0, 7, 3); // 14
     // top 9
-    s.addNode(0, 7, -4); // 15
+    s.addNode(0, 7, -3); // 15
 
 }
 
@@ -468,11 +468,11 @@ void TensegrityHedgehogModel::addBoxNodes() {
 	
 	*/
     double x1 = 0; // use the distance between vector 1 and vector 2 to control the height
-    double x2 = 2;
+    double x2 = 1.75;
     double y1 = 0;
-    double y2 = 2;
+    double y2 = 1.75;
     double z1 = 0;
-    double z2 = 2*sqrt(2); // The length of the diagonal is the input and the output is the height
+    double z2 = 1.75*sqrt(2); // The length of the diagonal is the input and the output is the height
 	//For instance if you want a 1 meter height cube you need to provide sqrt 2 for the height
 
 
