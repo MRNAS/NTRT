@@ -34,6 +34,13 @@
 #include "tgcreator/tgStructure.h"
 #include "tgcreator/tgStructureInfo.h"
 #include "tgcreator/tgNode.h"
+#include "core/tgBasicActuator.h"
+#include "core/tgRod.h"
+#include "tgcreator/tgBuildSpec.h"
+#include "tgcreator/tgBasicActuatorInfo.h"
+#include "tgcreator/tgRodInfo.h"
+#include "tgcreator/tgStructure.h"
+#include "tgcreator/tgStructureInfo.h"
 //Box add
 #include "LinearMath/btVector3.h"
 #include "BulletDynamics/Dynamics/btRigidBody.h"
@@ -302,21 +309,21 @@ void	threeBarModel::initPhysics()
 */
 //GYRO DEMO
 
-/*void TensegrityHedgehogModel::addActuators(tgStructure& s)
+void TensegrityHedgehogModel::addActuators(tgStructure& s)
 {
     // Bottom
     s.addPair(0, 8, tgString("actuator num", 0));
-    s.addPair(1, 9, tgString("actuator num", 1));
-    s.addPair(2, 10, tgString("actuator num", 2));
-    s.addPair(3, 11, tgString("actuator num", 3));
+   // s.addPair(1, 9, tgString("actuator num", 1));
+    //s.addPair(2, 10, tgString("actuator num", 2));
+    //s.addPair(3, 11, tgString("actuator num", 3));
  
     // Top
-    s.addPair(4, 12, tgString("actuator num", 4));
-    s.addPair(5, 13, tgString("actuator num", 5));
-    s.addPair(6, 14, tgString("actuator num", 6));
-    s.addPair(7, 15, tgString("actuator num", 7));
+    //s.addPair(4, 12, tgString("actuator num", 4));
+    //s.addPair(5, 13, tgString("actuator num", 5));
+    //s.addPair(6, 14, tgString("actuator num", 6));
+    //s.addPair(7, 15, tgString("actuator num", 7));
 
-}*/
+}
 
 void TensegrityHedgehogModel::setup(tgWorld& world)
 {
@@ -324,8 +331,8 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     // Define the configurations of the rods and strings
     // Note that pretension is defined for this string
     const tgRod::Config rodConfig(c.radius, c.density);
-    //const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
-      // c.hist, c.maxTension, c.targetVelocity);
+    const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
+       c.hist, c.maxTension, c.targetVelocity);
     
     // Create a structure that will hold the details of this model
     tgStructure s;
@@ -338,7 +345,7 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     addRods(s);
     
     // Add actuators to the structure
-    //addActuators(s);
+    addActuators(s);
     
     // Move the structure so it dohgesn't start in the ground
     y.move(btVector3(5,1.5, 5));
@@ -352,8 +359,7 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     tgBuildSpec spec;
     spec.addBuilder("rod", new tgRodInfo(rodConfig));
     spec.addBuilder("box", new tgBoxInfo(boxConfig));//tg Box
-
-    //spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
+    spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
     
     // Create your structureInfo
     tgStructureInfo structureInfo(s, spec); //Tensegrity
@@ -364,15 +370,15 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     structureInfos.buildInto(*this, world); //Hedgehog
 
     // Get the rod rigid bodies for controller
-    std::vector<tgRod*> rods = TensegrityHedgehogModel::find<tgRod>("rod");
-    for (int i = 0; i < rods.size(); i++) {
-        allRods.push_back(TensegrityHedgehogModel::find<tgRod>(tgString("rod num", i))[0]);    
-    }
+    //std::vector<tgRod*> rods = TensegrityHedgehogModel::find<tgRod>("rod");
+    //for (int i = 0; i < rods.size(); i++) {
+    //    allRods.push_back(TensegrityHedgehogModel::find<tgRod>(tgString("rod num", i))[0]);    
+    //}
         
     // Get the actuators for controller
     //std::vector<tgBasicActuator*> actuators = TensegrityHedgehogModel::find<tgBasicActuator>("actuator");
-   // for (int i = 0; i < rods.size(); i++) {
-    //    allActuators.push_back(TensegrityHedgehogModel::find<tgBasicActuator>(tgString("actuator num", i))[0]);    
+   //for (int i = 0; i < rods.size(); i++) {
+     //  allActuators.push_back(TensegrityHedgehogModel::find<tgBasicActuator>(tgString("actuator num", i))[0]);    
     //}
 
     // Notify controllers that setup has finished.
@@ -403,10 +409,10 @@ void TensegrityHedgehogModel::onVisit(tgModelVisitor& r)
     tgModel::onVisit(r);
 }
 
-//std::vector<tgBasicActuator*>& TensegrityHedgehogModel::getAllActuators()
-//{
-//   return allActuators;
-//}
+const std::vector<tgBasicActuator*>& TensegrityHedgehogModel::getAllActuators() const
+{
+   return allActuators;
+}
 
 std::vector<tgRod*>& TensegrityHedgehogModel::getAllRods()
 {

@@ -22,7 +22,7 @@
  * @author Manuel Retana
  * $Id$
  */
-// include "LengthController.h"
+#include "LengthController.h"
 // This application
 #include "TensegrityHedgehogModel.h"
 
@@ -52,7 +52,7 @@
  //HILLY TERRAIN
 /**int main(int argc, char** argv)
 *{
-*	std::cout << "App3Bar" << std::endl;
+*	std::cout << "TensegrityHedgehogModel" << std::endl;
 *#if (0)
 *    // First create the ground and world. Specify ground rotation in radians
 *	const double yaw = 0.0;
@@ -95,7 +95,7 @@
 //NORMAL TERRAIN
 int main(int argc, char** argv)
 {
-    std::cout << "App3Bar" << std::endl;
+    std::cout << "TensegrityHedgehogModel" << std::endl;
 
     // First create the ground and world. Specify ground rotation in radians
     const double yaw = 0.0;
