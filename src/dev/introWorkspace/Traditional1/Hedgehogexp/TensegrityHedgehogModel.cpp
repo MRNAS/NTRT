@@ -111,8 +111,8 @@ namespace
        10000,       // max tension
        1,         // target actuator velocity
 	//Box
-	1.0, // width (dm?)
-        1.0, // height (dm?)
+	2.0, // width (dm?)
+        2.0, // length (dm?)
         //0.0,  density (kg / length^3)
         1.0,  // friction (unitless)
         0.01, // rollFriction (unitless)
@@ -180,21 +180,21 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s,
     s.addNode(0, 10, -10); // 7
     //Small Box
     // bottom 5
-    s.addNode(-5, 2.5, 0); // 8
+    s.addNode(-4, 3, 0); // 8
     // bottom 6
-    s.addNode( 5, 2.5, 0); // 9
+    s.addNode( 4, 3, 0); // 9
     // bottom 7
-    s.addNode(0, 2.5, 5); // 10
+    s.addNode(0, 3, 4); // 10
     // bottom 8
-    s.addNode(0, 2.5, -5); // 11
+    s.addNode(0, 3, -4); // 11
     // top 5
-    s.addNode(-5, 7.5, 0); // 12
+    s.addNode(-4, 7, 0); // 12
     // top 7
-    s.addNode(5, 7.5, 0); // 13
+    s.addNode(4, 7, 0); // 13
     // top 8
-    s.addNode(0, 7.5, 5); // 14
+    s.addNode(0, 7, 4); // 14
     // top 9
-    s.addNode(0, 7.5, -5); // 15
+    s.addNode(0, 7, -4); // 15
 
 }
 
@@ -313,15 +313,15 @@ void TensegrityHedgehogModel::addActuators(tgStructure& s)
 {
     // Bottom
     s.addPair(0, 8, tgString("actuator num", 0));
-   // s.addPair(1, 9, tgString("actuator num", 1));
-    //s.addPair(2, 10, tgString("actuator num", 2));
-    //s.addPair(3, 11, tgString("actuator num", 3));
+    s.addPair(1, 9, tgString("actuator num", 1));
+    s.addPair(2, 10, tgString("actuator num", 2));
+    s.addPair(3, 11, tgString("actuator num", 3));
  
     // Top
-    //s.addPair(4, 12, tgString("actuator num", 4));
-    //s.addPair(5, 13, tgString("actuator num", 5));
-    //s.addPair(6, 14, tgString("actuator num", 6));
-    //s.addPair(7, 15, tgString("actuator num", 7));
+    s.addPair(4, 12, tgString("actuator num", 4));
+    s.addPair(5, 13, tgString("actuator num", 5));
+    s.addPair(6, 14, tgString("actuator num", 6));
+    s.addPair(7, 15, tgString("actuator num", 7));
 
 }
 
@@ -347,9 +347,11 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     // Add actuators to the structure
     addActuators(s);
     
-    // Move the structure so it dohgesn't start in the ground
-    y.move(btVector3(5,1.5, 5));
-    s.move(btVector3(5,0, 5));
+    // Move the structure so it doesn't start in the ground
+    y.move(btVector3(5,10, 5));
+    y.addRotation(btVector3(5,10,5),btVector3(0,0,1), 180); // Z blue Axis
+    y.addRotation(btVector3(5,10,5),btVector3(1,0,0), 270); // X red axis
+    s.move(btVector3(5,5, 5));
   //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
     //btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
     //s.addRotation(btVector3(0,10,0),btQuaternion(1,2,4,3));
@@ -455,19 +457,29 @@ void TensegrityHedgehogModel::addNodes(tgStructure& y) {
 
 //Box Extra
 void TensegrityHedgehogModel::addBoxNodes() {
-    tgNode node;
-  
-    double x1 = 2; // Smaller x values leads to a narrower crater
-    double x2 = 1;
-    double y1 = 2;
-    double y2 = 1;
-    double z1 = 1;
-    double z2 = 1.5;//sqrt(3);
- /* 
-    btVector3 rotationPoint = btVector3((x2-x1)/2, (y2-y1)/2, (z2-z1)/2); //Halfway between nodes
-    btVector3 rotationAxis = btVector3(0, 1, 0);  // y-axis
-    double rotationAngle = 0; // Must != 0 for actual change
-*/
+    tgNode node; //CREATES THE HEIGHT OF NODES BASED ON NODES
+  /*
+    double x1 = 1; // use the distance between vector 1 and vector 2 to control the height
+    double x2 = 0;
+    double y1 = 1;
+    double y2 = 0;
+    double z1 = 0;
+    double z2 = 1;
+	
+	*/
+    double x1 = 0; // use the distance between vector 1 and vector 2 to control the height
+    double x2 = 2;
+    double y1 = 0;
+    double y2 = 2;
+    double z1 = 0;
+    double z2 = 2*sqrt(2); // The length of the diagonal is the input and the output is the height
+	//For instance if you want a 1 meter height cube you need to provide sqrt 2 for the height
+
+
+    //btVector3 rotationPoint = btVector3((x2-x1)/2, (y2-y1)/2, (z2-z1)/2); //Halfway between nodes
+    //btVector3 rotationAxis = btVector3(0, 1, 0);  // y-axis
+    //double rotationAngle = 80; // Must != 0 for actual change
+
     node = tgNode(x1, y1, z1, "node");
     //node.addRotation(rotationPoint, rotationAxis, rotationAngle);
     nodes.push_back(node);
