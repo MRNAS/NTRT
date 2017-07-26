@@ -5,4 +5,5 @@ Subdirs(
 	Hedgehog
 	Hedgehogexp
 	Gyroexp
+	spinbox
 )
