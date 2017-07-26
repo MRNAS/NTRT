@@ -1,5 +1,5 @@
 env
-build
+# build
 build_test
 build_test_integration
 conf/*.conf
