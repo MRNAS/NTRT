@@ -168,7 +168,7 @@ void threeBarModel::addRods(tgStructure& s)
 }
 // GYRO DEMO
 
-
+/*
 void	threeBarModel::initPhysics()
 {
 	//m_azi=90;
@@ -242,7 +242,7 @@ void	threeBarModel::initPhysics()
 }
 
 //}
-
+*/
 //GYRO DEMO
 
 

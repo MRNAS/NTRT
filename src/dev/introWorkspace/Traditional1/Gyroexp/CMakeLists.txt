@@ -11,7 +11,7 @@ link_libraries(tgcreator
 		yaml-cpp
 		TensegrityModel)
 
-add_executable(Hedgehog
-    threeBarModel.cpp
-    App3BarTraditional.cpp
+add_executable(Gyroexp
+    GyroscopicDemo.cpp
+    main.cpp
 ) 
