@@ -49,7 +49,7 @@
 #include "LinearMath/btTransform.h"
 // The C++ Standard Library
 #include <stdexcept>
-
+#include "core/abstractMarker.h" //Abstract marker
 // Dependencies coming from Gyro
 /*#include "btBulletDynamicsCommon.h"
 #include "LinearMath/btIDebugDraw.h"
@@ -300,9 +300,9 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     addActuators(s);
     
     // Move the structure so it doesn't start in the ground
-    y.move(btVector3(-10,1, -10 ));
-    y.addRotation(btVector3(-10,1,-10),btVector3(0,0,1), 180); // Z blue Axis
-    y.addRotation(btVector3(-10,1,-10),btVector3(1,0,0), 270); // X red axis
+    y.move(btVector3(10,1, 10 ));
+    y.addRotation(btVector3(10,1,10),btVector3(0,0,1), 180); // Z blue Axis
+    y.addRotation(btVector3(10,1,10),btVector3(1,0,0), 270); // X red axis
     s.move(btVector3(5,5, 5));
   //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
     //btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
@@ -337,6 +337,13 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
 
     // Notify controllers that setup has finished.
     notifySetup();
+    
+    //Velocity
+    
+    btVector3 location(0,5.0,0);
+    btVector3 rotation(0.0,0.6,0.8);
+  	btVector3 speed(0,20,100);
+    this->moveModel(location,rotation,speed);
     
     // Actually setup the children
     tgModel::setup(world);
@@ -442,23 +449,39 @@ void TensegrityHedgehogModel::addBoxNodes() {
      
 }
 //Box rotation
-void T12SuperBallPayload::addMarkers(tgStructure &y)
+/*void TensegrityHedgehogModel::addMarkers(tgStructure& s)
 {
-    //std::vector<tgRod *> rods=find<tgRod>("rod");
-	std::vector <tgNode> nodes=find<>();
+    std::vector<tgRod *> rods=find<tgRod>("rod");
+	//std::vector <tgNode> nodes=find<tgNode>("node");
 	//std::vector<tgRod*> allRods;
 
-	for(int i=0;i<12;i++)
+	for(int i=0;i<37;i++)
 	{
 		const btRigidBody* bt = rods[rodNumbersPerNode[i]]->getPRigidBody();
 		btTransform inverseTransform = bt->getWorldTransform().inverse();
-		btVector3 pos = inverseTransform * (nodePositions[i]);
+		//btVector3 pos = inverseTransform * (nodePositions[i]);
 		abstractMarker tmp=abstractMarker(bt,pos,btVector3(0.08*i,1.0 - 0.08*i,.0),i);
 		this->addMarker(tmp);
 	}
+}*/
+
+void TensegrityHedgehogModel::moveModel(btVector3 positionVector,btVector3 rotationVector,btVector3 speedVector)
+{
+    std::vector<tgRod *> rods=find<tgRod>("rod");
+
+	btQuaternion initialRotationQuat;
+	initialRotationQuat.setEuler(rotationVector[0],rotationVector[1],rotationVector[2]);
+	btTransform initialTransform;
+	initialTransform.setIdentity();
+	initialTransform.setRotation(initialRotationQuat);
+	initialTransform.setOrigin(positionVector);
+	for(int i=0;i<rods.size();i++)
+	{
+			rods[i]->getPRigidBody()->setLinearVelocity(speedVector);
+			rods[i]->getPRigidBody()->setWorldTransform(initialTransform * rods[i]->getPRigidBody()->getWorldTransform());
+	}
 }
 //Box rotation
-
 /*
 void	tgStructureInfo::initRigidBodies(tgWorld& world){
 	btVector3 localInertia;
