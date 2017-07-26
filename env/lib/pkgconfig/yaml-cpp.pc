@@ -1,0 +1,11 @@
+prefix=/home/tensegribuntu/NTRT/env
+exec_prefix=/home/tensegribuntu/NTRT/env
+libdir=${prefix}/lib
+includedir=${prefix}/include
+
+Name: Yaml-cpp
+Description: A YAML parser and emitter for C++
+Version: 0.5.2
+Requires:
+Libs: -L${libdir} -lyaml-cpp
+Cflags: -I${includedir}

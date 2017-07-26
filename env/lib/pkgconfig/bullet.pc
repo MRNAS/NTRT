@@ -1,0 +1,6 @@
+Name: bullet
+Description: Bullet Continuous Collision Detection and Physics Library
+Requires:
+Version: 2.82
+Libs: -L/home/tensegribuntu/NTRT/env/lib -lBulletSoftBody -lBulletDynamics -lBulletCollision -lLinearMath
+Cflags: -DBT_USE_DOUBLE_PRECISION -I/home/tensegribuntu/NTRT/env/include/bullet
