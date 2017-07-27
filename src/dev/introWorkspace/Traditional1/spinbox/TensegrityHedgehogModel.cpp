@@ -94,12 +94,12 @@ namespace
 	double rollFriction;
 	double Friction;
 	// Box parameters
-/*	double width;
+	double width;
 	double height;
 	double friction;
-	double rollFriction;
+	double rollfriction;
 	double restitution; 
-	//Box parameters */
+	//Box parameters 
     } c =
    {
        0.688,     // density (mass / length^3)
@@ -116,12 +116,12 @@ namespace
        0.4, //Roll friction (unitless)
        0.4, //Friction (unitless) //Ground is at 0.5 friction
 	//Box
-/*	1.75, // width (dm?) x
-        1.75, // length (dm?) z
+       1.75, // width (dm?) x
+       1.75, // length (dm?) z
         //0.0,  density (kg / length^3)
-        1.0,  // friction (unitless)
-        0.01, // rollFriction (unitless)
-      0.2,  // restitution (?)  */ 
+       1.0,  // friction (unitless)
+       0.01, // rollFriction (unitless)
+        0.2,  // restitution (?)  
 	//Box
   };
 } // namespace
@@ -130,7 +130,7 @@ TensegrityHedgehogModel::TensegrityHedgehogModel() : tgModel()
 {
 	origin = btVector3(0,0,0); //Box
 }
-//box
+//boxi6
 TensegrityHedgehogModel::TensegrityHedgehogModel(btVector3 center) : tgModel() 
 {
 	origin = btVector3(center.getX(), center.getY(), center.getZ()); 
@@ -289,13 +289,14 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     // Define the configurations of the rods and strings
     // Note that pretension is defined for this string
     const tgRod::Config rodConfig(c.radius, c.density, c.Friction, c.rollFriction);
+    const tgBox::Config boxConfig(c.width, c.height, c.density, c.friction, c.rollFriction, c.restitution);
     //const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
       // c.hist, c.maxTension, c.targetVelocity);
     
     // Create a structure that will hold the details of this model
     tgStructure s;
-    //tgStructure y;
-    //addNodes(y); 
+    tgStructure y;
+    addNodes(y); 
     // Add nodes to the structure
     addNodes(s, c.triangle_length, c.triangle_height, c.prism_height);
     //addNodes(s);
@@ -307,9 +308,9 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     //addActuators(s);
     
     // Move the structure so it doesn't start in the ground
-    //y.move(btVector3(10,1, 10 ));
-    //y.addRotation(btVector3(10,1,10),btVector3(0,0,1), 180); // Z blue Axis
-    //y.addRotation(btVector3(10,1,10),btVector3(1,0,0), 270); // X red axis
+    y.move(btVector3(10,1, 10 ));
+    y.addRotation(btVector3(10,1,10),btVector3(0,0,1), 180); // Z blue Axis
+    y.addRotation(btVector3(10,1,10),btVector3(1,0,0), 270); // X red axis
     //s.move(btVector3(5,5, 5));
   //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
     //btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
@@ -331,16 +332,16 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     //const tgSphere::Config sphereConfig2(0.5, 2.5);
     //spec.addBuilder("light", new tgSphereInfo(sphereConfig2));
 
-    //spec.addBuilder("box", new tgBoxInfo(boxConfig));//tg Box
+    spec.addBuilder("box", new tgBoxInfo(boxConfig));//tg Box
     //spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
     
     // Create your structureInfo
     tgStructureInfo structureInfo(s, spec); //Tensegrity
-    //tgStructureInfo structureInfos(y, spec); //Hedgehog
+    tgStructureInfo structureInfos(y, spec); //Hedgehog
 
     // Use the structureInfo to build ourselves
     structureInfo.buildInto(*this, world); //Tensegrity
-    //structureInfos.buildInto(*this, world); //Hedgehog
+    structureInfos.buildInto(*this, world); //Hedgehog
 
     // Get the rod rigid bodies for controller
     //std::vector<tgRod*> rods = TensegrityHedgehogModel::find<tgRod>("rod");
@@ -361,7 +362,7 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     
     btVector3 location(0,0,0);
     btVector3 rotation(0.0,0.0,0.0);
-  	btVector3 angular(20,0,20); //Rad/sec y is up.
+  	btVector3 angular(0,20,0); //Rad/sec y is up.
     this->moveModel(location,rotation,angular);
     
     // Actually setup the children
@@ -467,7 +468,7 @@ void TensegrityHedgehogModel::addBoxNodes() {
     nodes.push_back(node);
      
 }
-//Box rotation
+//Box rotation Abtract markers
 /*void TensegrityHedgehogModel::addMarkers(tgStructure& s)
 {
     std::vector<tgRod *> rods=find<tgRod>("rod");
@@ -483,7 +484,7 @@ void TensegrityHedgehogModel::addBoxNodes() {
 		this->addMarker(tmp);
 	}
 }*/
-
+/* Rotate Tensegrity Box
 void TensegrityHedgehogModel::moveModel(btVector3 positionVector,btVector3 rotationVector,btVector3 angularVector)
 {
     std::vector<tgRod *> rods=find<tgRod>("rod");
@@ -503,6 +504,28 @@ void TensegrityHedgehogModel::moveModel(btVector3 positionVector,btVector3 rotat
 			//rods[i]->getPRigidBody()->applyTorque(angularVector);
 			rods[i]->getPRigidBody()->setAngularVelocity(angularVector);
 			rods[i]->getPRigidBody()->setWorldTransform(initialTransform * rods[i]->getPRigidBody()->getWorldTransform());
+	}
+}
+*/
+void TensegrityHedgehogModel::moveModel(btVector3 positionVector,btVector3 rotationVector,btVector3 angularVector)
+{
+    std::vector<tgBox *> boxes=find<tgBox>("box");
+
+	btQuaternion initialRotationQuat;
+	initialRotationQuat.setEuler(rotationVector[0],rotationVector[1],rotationVector[2]);
+	btTransform initialTransform;
+	initialTransform.setIdentity();
+	initialTransform.setRotation(initialRotationQuat);
+	initialTransform.setOrigin(positionVector);
+	
+	
+	for(int i=0;i<boxes.size();i++)
+	{
+			//rods[i]->getPRigidBody()->setLinearVelocity(speedVector);
+			//rods[i]->setAngularFactor(btScalar(5)); 
+			//rods[i]->getPRigidBody()->applyTorque(angularVector);
+			boxes[i]->getPRigidBody()->setAngularVelocity(angularVector);
+			boxes[i]->getPRigidBody()->setWorldTransform(initialTransform * boxes[i]->getPRigidBody()->getWorldTransform());
 	}
 }
 

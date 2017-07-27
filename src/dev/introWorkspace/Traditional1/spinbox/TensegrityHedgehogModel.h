@@ -83,33 +83,6 @@ public:
      */
     virtual ~TensegrityHedgehogModel();
 
-//Box Rotation
-	//void	initPhysics();
-
-	//void	exitPhysics();
-
-	//virtual void clientMoveAndDisplay();
-
-	//virtual void displayCallback();
-	
-	/*static TensegrityHedgehogModel* Create()
-	{
-		TensegrityHedgehogModel* demo = new TensegrityHedgehogModel();
-		demo->myinit();
-		demo->initPhysics();
-		return demo;
-	}
-	
-  //ERRORS
-	static tgModel* Create()
-	{
-		TensegrityHedgehogModel* demo = new TensegrityHedgehogModel();
-		demo->myinit();
-		demo->initPhysics();
-		return demo;
-	}
-//Box Rotation
-    */
     /**
      * Create the model. Place the rods and strings into the world
      * that is passed into the simulation. This is triggered
