@@ -294,15 +294,15 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
       // c.hist, c.maxTension, c.targetVelocity);
     
     // Create a structure that will hold the details of this model
-    tgStructure s;
+    //tgStructure s;
     tgStructure y;
     addNodes(y); 
     // Add nodes to the structure
-    addNodes(s, c.triangle_length, c.triangle_height, c.prism_height);
+    //addNodes(s, c.triangle_length, c.triangle_height, c.prism_height);
     //addNodes(s);
     
     // Add rods to the structure
-    addRods(s);
+    //addRods(s);
     
     // Add actuators to the structure
     //addActuators(s);
@@ -310,7 +310,7 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     // Move the structure so it doesn't start in the ground
     y.move(btVector3(10,1, 10 ));
     y.addRotation(btVector3(10,1,10),btVector3(0,0,1), 180); // Z blue Axis
-    y.addRotation(btVector3(10,1,10),btVector3(1,0,0), 270); // X red axis
+    y.addRotation(btVector3(10,1,10),btVector3(1,0,0), 260); // X red axis
     //s.move(btVector3(5,5, 5));
   //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
     //btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
@@ -323,7 +323,7 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
-    spec.addBuilder("rod", new tgRodInfo(rodConfig));
+    //spec.addBuilder("rod", new tgRodInfo(rodConfig));
     
   
      //TG BOX NEW TRIAL
@@ -336,11 +336,11 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     //spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
     
     // Create your structureInfo
-    tgStructureInfo structureInfo(s, spec); //Tensegrity
+    //tgStructureInfo structureInfo(s, spec); //Tensegrity
     tgStructureInfo structureInfos(y, spec); //Hedgehog
 
     // Use the structureInfo to build ourselves
-    structureInfo.buildInto(*this, world); //Tensegrity
+    //structureInfo.buildInto(*this, world); //Tensegrity
     structureInfos.buildInto(*this, world); //Hedgehog
 
     // Get the rod rigid bodies for controller
@@ -361,8 +361,8 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     //Velocity
     
     btVector3 location(0,0,0);
-    btVector3 rotation(0.0,0.0,0.0);
-  	btVector3 angular(0,20,0); //Rad/sec y is up.
+    btVector3 rotation(0.0,0,0.0);
+    btVector3 angular(0,30,0); //Rad/sec y is up.
     this->moveModel(location,rotation,angular);
     
     // Actually setup the children
