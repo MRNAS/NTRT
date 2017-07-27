@@ -15,3 +15,7 @@ add_executable(Spinbox
     TensegrityHedgehogModel.cpp
     AppTensegrityHedgehog.cpp
 ) 
+
+Subdirs(
+	controllers
+)

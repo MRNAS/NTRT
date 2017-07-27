@@ -33,7 +33,7 @@
 #include "core/tgSubject.h"
 
 // Builder libraries Don't need as many libraries. There is a need to clean up
-#include "core/tgBasicActuator.h"
+//#include "core/tgBasicActuator.h"
 #include "LinearMath/btVector3.h"
 #include "core/tgRod.h"
 #include "tgcreator/tgNode.h"
@@ -50,7 +50,7 @@
 // Forward declarations
 class tgLinearString;
 class tgNode;
-class tgBasicActuator;
+//class tgBasicActuator;
 class tgModelVisitor;
 class tgStructure;
 class tgWorld;
@@ -145,7 +145,7 @@ public:
      * Return a vector of all actuators for the controllers to work with.
      * @return A vector of all of the actuators
      */
-    const std::vector<tgBasicActuator*>& getAllActuators() const;
+    //const std::vector<tgBasicActuator*>& getAllActuators() const;
 
     /**
      * Return a vector of all rod bodies for the controllers to work with.
@@ -188,7 +188,7 @@ private:
      * A list of all of the basic actuators. Will be empty until most of the way
      * through setup when it is filled using tgModel's find methods
      */
-    std::vector<tgBasicActuator*> allActuators;
+   // std::vector<tgBasicActuator*> allActuators;
 //Box add
 /*
      * Adds the markers to the corners of the so that we can visualize

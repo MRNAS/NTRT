@@ -211,7 +211,7 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s,
 void TensegrityHedgehogModel::addRods(tgStructure& s)
 {
     //Tensegrity
-    s.addPair( 0,  4, tgString("rod num", 0));
+   /* s.addPair( 0,  4, tgString("rod num", 0));
     s.addPair( 1,  5, tgString("rod num", 1));
     s.addPair( 2,  6, tgString("rod num", 2));
     s.addPair( 3,  7, tgString("rod num", 3));
@@ -223,8 +223,8 @@ void TensegrityHedgehogModel::addRods(tgStructure& s)
     s.addPair( 4,  7, tgString("rod num", 9));
     s.addPair( 5,  6, tgString("rod num", 10));
     s.addPair( 5,  7, tgString("rod num", 11));
-
-//Hedgehog Cover
+*/
+//Hedgehog 
     s.addPair( 8,  12, tgString("rod num", 12));
     s.addPair( 9,  13, tgString("rod num", 13));
     s.addPair( 10,  14, tgString("rod num", 14));
@@ -261,9 +261,9 @@ void TensegrityHedgehogModel::addRods(tgStructure& s)
 
 }
 
-void TensegrityHedgehogModel::addActuators(tgStructure& s)
+ /* void TensegrityHedgehogModel::addActuators(tgStructure& s)
 {
-    // Bottom
+  // Bottom
     s.addPair(0, 8, tgString("actuator num", 0));
     s.addPair(1, 9, tgString("actuator num", 1));
     s.addPair(2, 10, tgString("actuator num", 2));
@@ -276,15 +276,15 @@ void TensegrityHedgehogModel::addActuators(tgStructure& s)
     s.addPair(7, 15, tgString("actuator num", 7));
 
 }
-
+*/
 void TensegrityHedgehogModel::setup(tgWorld& world)
 {
     const tgBox::Config boxConfig(c.width, c.height, c.density, c.friction, c.rollFriction, c.restitution); //box
     // Define the configurations of the rods and strings
     // Note that pretension is defined for this string
     const tgRod::Config rodConfig(c.radius, c.density);
-    const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
-       c.hist, c.maxTension, c.targetVelocity);
+    //const tgBasicActuator::Config actuatorConfig(c.stiffness, c.damping, c.pretension,
+      // c.hist, c.maxTension, c.targetVelocity);
     
     // Create a structure that will hold the details of this model
     tgStructure s;
@@ -297,13 +297,13 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     addRods(s);
     
     // Add actuators to the structure
-    addActuators(s);
+    //addActuators(s);
     
     // Move the structure so it doesn't start in the ground
-    y.move(btVector3(10,1, 10 ));
-    y.addRotation(btVector3(10,1,10),btVector3(0,0,1), 180); // Z blue Axis
-    y.addRotation(btVector3(10,1,10),btVector3(1,0,0), 270); // X red axis
-    s.move(btVector3(5,5, 5));
+    //y.move(btVector3(10,1, 10 ));
+    //y.addRotation(btVector3(10,1,10),btVector3(0,0,1), 180); // Z blue Axis
+    //y.addRotation(btVector3(10,1,10),btVector3(1,0,0), 270); // X red axis
+    //s.move(btVector3(5,5, 5));
   //s.addRotation(btVector3(0,10,0),btVector3(4,12,3),btVector3(1,45,18));
     //btTransform T(btQuaternion(btVector3(0,1,0),btRadians(60)),btVector3(0.0,0.5,0));
     //s.addRotation(btVector3(0,10,0),btQuaternion(1,2,4,3));
@@ -312,8 +312,8 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     // Create the build spec that uses tags to turn the structure into a real model
     tgBuildSpec spec;
     spec.addBuilder("rod", new tgRodInfo(rodConfig));
-    spec.addBuilder("box", new tgBoxInfo(boxConfig));//tg Box
-    spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
+    //spec.addBuilder("box", new tgBoxInfo(boxConfig));//tg Box
+    //spec.addBuilder("actuator", new tgBasicActuatorInfo(actuatorConfig));
     
     // Create your structureInfo
     tgStructureInfo structureInfo(s, spec); //Tensegrity
@@ -321,7 +321,7 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
 
     // Use the structureInfo to build ourselves
     structureInfo.buildInto(*this, world); //Tensegrity
-    structureInfos.buildInto(*this, world); //Hedgehog
+    //structureInfos.buildInto(*this, world); //Hedgehog
 
     // Get the rod rigid bodies for controller
     //std::vector<tgRod*> rods = TensegrityHedgehogModel::find<tgRod>("rod");
@@ -340,10 +340,10 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     
     //Velocity
     
-    btVector3 location(0,5.0,0);
-    btVector3 rotation(0.0,0.6,0.8);
-  	btVector3 speed(0,20,100);
-    this->moveModel(location,rotation,speed);
+    btVector3 location(0,0,0);
+    btVector3 rotation(0.0,0.0,0.0);
+  	btVector3 angular(0,10,0);
+    this->moveModel(location,rotation,angular);
     
     // Actually setup the children
     tgModel::setup(world);
@@ -370,10 +370,10 @@ void TensegrityHedgehogModel::onVisit(tgModelVisitor& r)
     tgModel::onVisit(r);
 }
 
-const std::vector<tgBasicActuator*>& TensegrityHedgehogModel::getAllActuators() const
+/*const std::vector<tgBasicActuator*>& TensegrityHedgehogModel::getAllActuators() const
 {
    return allActuators;
-}
+}*/
 
 std::vector<tgRod*>& TensegrityHedgehogModel::getAllRods()
 {
@@ -455,7 +455,7 @@ void TensegrityHedgehogModel::addBoxNodes() {
 	//std::vector <tgNode> nodes=find<tgNode>("node");
 	//std::vector<tgRod*> allRods;
 
-	for(int i=0;i<37;i++)
+	for(int i=0;i<37;i++9)
 	{
 		const btRigidBody* bt = rods[rodNumbersPerNode[i]]->getPRigidBody();
 		btTransform inverseTransform = bt->getWorldTransform().inverse();
@@ -465,7 +465,7 @@ void TensegrityHedgehogModel::addBoxNodes() {
 	}
 }*/
 
-void TensegrityHedgehogModel::moveModel(btVector3 positionVector,btVector3 rotationVector,btVector3 speedVector)
+void TensegrityHedgehogModel::moveModel(btVector3 positionVector,btVector3 rotationVector,btVector3 angularVector)
 {
     std::vector<tgRod *> rods=find<tgRod>("rod");
 
@@ -477,10 +477,12 @@ void TensegrityHedgehogModel::moveModel(btVector3 positionVector,btVector3 rotat
 	initialTransform.setOrigin(positionVector);
 	for(int i=0;i<rods.size();i++)
 	{
-			rods[i]->getPRigidBody()->setLinearVelocity(speedVector);
+			//rods[i]->getPRigidBody()->setLinearVelocity(speedVector);
+			rods[i]->getPRigidBody()->setAngularVelocity(angularVector);
 			rods[i]->getPRigidBody()->setWorldTransform(initialTransform * rods[i]->getPRigidBody()->getWorldTransform());
 	}
 }
+
 //Box rotation
 /*
 void	tgStructureInfo::initRigidBodies(tgWorld& world){

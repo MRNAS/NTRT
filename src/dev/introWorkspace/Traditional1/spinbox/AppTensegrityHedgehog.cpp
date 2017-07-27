@@ -22,7 +22,7 @@
  * @author Manuel Retana
  * $Id$
  */
-#include "LengthController.h"
+//#include "LengthController.h"
 // This application
 #include "TensegrityHedgehogModel.h"
 
