@@ -362,7 +362,8 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     
     btVector3 location(0,0,0);
     btVector3 rotation(0.0,0,0.0);
-    btVector3 angular(0,30,0); //Rad/sec y is up.
+    btVector3 angular(30,0,0); //Rad/sec y is up.
+    //btVector3 angular(30,0,0);
     this->moveModel(location,rotation,angular);
     
     // Actually setup the children
