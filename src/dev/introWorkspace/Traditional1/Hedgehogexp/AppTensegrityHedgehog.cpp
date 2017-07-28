@@ -106,7 +106,7 @@ int main(int argc, char** argv)
     tgBoxGround* ground = new tgBoxGround(groundConfig);
     
     double sf = 10;
-    double gravity = 0.0057*sf;
+    double gravity = 9.81*sf;
     const tgWorld::Config config(gravity); // gravity, cm/sec^2
     tgWorld world(config, ground);
 

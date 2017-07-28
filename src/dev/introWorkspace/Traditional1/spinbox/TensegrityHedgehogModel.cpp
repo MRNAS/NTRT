@@ -200,8 +200,6 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s,
     s.addNode(0, 7, 3); // 14
     // top 9
     s.addNode(0, 7, -3); // 15
-    
-    s.addNode(15,15,15,"light");
 
 }
 

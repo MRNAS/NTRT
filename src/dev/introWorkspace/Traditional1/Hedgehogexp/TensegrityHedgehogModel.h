@@ -173,6 +173,14 @@ private:
          * Adds nodes to 'nodes' vector
          */
     void addBoxNodes();
+/*
+	 * Moves all the rods (that are actually all the rigid bodies) according to the arguments.
+	 * First rotates the structure around 3 axises given 3 angles.
+	 * Moves the structure to the target point.
+	 * Sets all the bars speed to the given speed vector.
+	 * (muscles and markers are moved automatically since they are attached).
+	 */
+     void moveModel(btVector3 targetPositionVector,btVector3 rotationVector,btVector3 speedVector);
 
     std::vector <tgNode> nodes;
     btVector3 origin;
