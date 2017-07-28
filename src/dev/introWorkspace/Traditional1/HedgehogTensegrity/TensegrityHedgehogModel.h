@@ -16,43 +16,8 @@
  * governing permissions and limitations under the License.
 */
 
-#ifndef TENSEGRITY_HEDGEHOG_MODEL_H
-#define TENSEGRITY_HEDGEHOG_MODEL_H
-
-// Dependencies coming from Gyro
-/*#ifdef _WINDOWS
-#else
-#include "GlutDemoApplication.h"
-#define PlatformDemoApplication GlutDemoApplication
-#endif
-*/
-// Dependencies coming from Gyro
-
-// This library
-#include "core/tgModel.h"
-#include "core/tgSubject.h"
-
-// Builder libraries
-#include "core/tgBasicActuator.h"
-#include "LinearMath/btVector3.h"
-#include "core/tgRod.h"
-#include "tgcreator/tgNode.h"
-#include "tgcreator/tgBuildSpec.h"
-#include "tgcreator/tgBasicActuatorInfo.h"
-#include "tgcreator/tgRodInfo.h"
-#include "tgcreator/tgStructure.h"
-#include "tgcreator/tgStructureInfo.h"
-
-// The C++ Standard Library
-#include <vector>
-
-// Forward declarations
-class tgLinearString;
-class tgNode;
-class tgBasicActuator;
-class tgModelVisitor;
-class tgStructure;
-class tgWorld;
+#ifndef TENSEGRITY_HEDGEHOGMODEL_H
+#define TENSEGRITY_HEDGEHOGMODEL_H
 
 /**
  * @file Tensegrity_HedgehogModel.h
@@ -60,21 +25,46 @@ class tgWorld;
   * @author Manuel Retana
  * $Id$
  */
+
+// This library
+#include "core/tgModel.h"
+#include "core/tgSubject.h"
+
+//used for data observer
+#include "core/tgObserver.h"
+#include "sensors/tgDataObserver.h"
+#include "LinearMath/btVector3.h"
+#include "core/tgRod.h"
+#include "tgcreator/tgNode.h"
+
+ 
+// The C++ Standard Library
+#include <vector>
+
+// Forward declarations
+class tgSpringCableActuator;
+class tgModelVisitor;
+class tgStructure;
+class tgWorld;
+
+/**
+ * Class that creates the six strut Hedgehog Tensegrity Hybrid model using tgcreator
+ */
 class TensegrityHedgehogModel : public tgSubject<TensegrityHedgehogModel>, public tgModel
 {
 public: 
-    
-    /**
-     * The only constructor. Configuration parameters are within the
-     * .cpp file in this case, not passed in. 
+	
+	/**
+     * The only constructor. Utilizes default constructor of tgModel
+     * Configuration parameters are within the .cpp file in this case,
+     * not passed in. 
      */
     TensegrityHedgehogModel();
-
-//Box addition
+	
+	/**
+     * Function introduved to centrate the Hedgehog
+     */
     TensegrityHedgehogModel(btVector3 origin);
-//Box addition
-
-    
     /**
      * Destructor. Deletes controllers, if any were added during setup.
      * Teardown handles everything else.
@@ -102,8 +92,8 @@ public:
      * @param[in] dt, the timestep. Must be positive.
      */
     virtual void step(double dt);
-    
-    /**
+	
+	/**
      * Receives a tgModelVisitor and dispatches itself into the
      * visitor's "render" function. This model will go to the default
      * tgModel function, which does nothing.
@@ -113,55 +103,52 @@ public:
     virtual void onVisit(tgModelVisitor& r);
     
     /**
-     * Return a vector of all actuators for the controllers to work with.
-     * @return A vector of all of the actuators
+     * Return a vector of all muscles for the controllers to work with.
+     * @return A vector of all of the muscles
      */
-    const std::vector<tgBasicActuator*>& getAllActuators() const;
-
+    const std::vector<tgSpringCableActuator*>& getAllMuscles() const;
+    
     /**
      * Return a vector of all rod bodies for the controllers to work with.
      * @return A vector of all of the rod rigid bodies
      */
     std::vector<tgRod*>& getAllRods();
-      
-private:
     
-    /**
+private:
+	
+	/**
      * A function called during setup that determines the positions of
      * the nodes based on construction parameters. Rewrite this function
      * for your own models
-     * @param[in] s: A tgStructure that we're building into
-     * @param[in] edge: the X distance of the base points
-     * @param[in] width: the Z distance of the base triangle
-     * @param[in] height: the Y distance along the axis of the prism
+     * @param[in] tetra: A tgStructure that we're building into
      */
     static void addNodes(tgStructure& s,
                             double edge,
                             double width,
                             double height);
-    
-    /**
+	
+	/**
      * A function called during setup that creates rods from the
      * relevant nodes. Rewrite this function for your own models.
      * @param[in] s A tgStructure that we're building into
      */
     static void addRods(tgStructure& s);
-    
-    /**
-     * A function called during setup that creates actuators (Strings) from
+	
+	/**
+     * A function called during setup that creates muscles (Strings) from
      * the relevant nodes. Rewrite this function for your own models.
      * @param[in] s A tgStructure that we're building into
      */
-    static void addActuators(tgStructure& s);
+    static void addMuscles(tgStructure& s);
 
-private:    
-    /**
-     * A list of all of the basic actuators. Will be empty until most of the way
-     * through setup when it is filled using tgModel's find methods
+private:
+	
+	/**
+     * A list of all of the muscles. Will be empty until most of the way
+     * through setup
      */
-    std::vector<tgBasicActuator*> allActuators;
-//Box add
- /**
+    std::vector<tgSpringCableActuator*> allMuscles;
+/**
          * A function called during setup that determines the positions of
          * the nodes (center points of opposing box faces) 
          * based on construction parameters.
@@ -176,13 +163,12 @@ private:
 
     std::vector <tgNode> nodes;
     btVector3 origin;
-//Box add
-
-    /**
+    
+     /**
      * A list of all of the rods. Will be empty until most of the way
      * through setup when it is filled using tgModel's find methods
      */
     std::vector<tgRod*> allRods;
 };
 
-#endif  // TENSEGRITY_HEDGEHOG_MODEL_H
+#endif  // TENSEGRITY_HEDGEHOGMODEL_H
