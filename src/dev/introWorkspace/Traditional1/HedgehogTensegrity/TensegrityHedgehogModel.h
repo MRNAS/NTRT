@@ -154,6 +154,15 @@ private:
          * based on construction parameters.
          * @param[in] s: the tgStructure that we're building into
          */
+/**
+	 * Moves the Hedgehog
+	 * First rotates the structure around 3 axises given 3 angles.
+	 * Moves the structure to the target point.
+	 * et the cube to a given angular velocity
+	 * (muscles and markers are moved automatically since they are attached).
+	 */
+    void moveModel(btVector3 targetPositionVector,btVector3 rotationVector,btVector3 speedVector);
+
     void addNodes(tgStructure& y);
 /**
          * Determines the box nodes (center points of opposing box faces

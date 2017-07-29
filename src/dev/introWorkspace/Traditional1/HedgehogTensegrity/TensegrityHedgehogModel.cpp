@@ -28,6 +28,8 @@
 // This library
 #include "core/tgSpringCableActuator.h"
 #include "core/tgRod.h"
+#include "core/tgBox.h"
+#include "tgcreator/tgBoxInfo.h"
 #include "tgcreator/tgBuildSpec.h"
 #include "tgcreator/tgBasicActuatorInfo.h"
 #include "tgcreator/tgRodInfo.h"
@@ -55,7 +57,7 @@ namespace
     // similarly, frictional parameters are for the tgRod objects.
     const struct Config
     {
-        double density;
+        double density; //Density of the rods
         double radius;
         double stiffness;
         double stiffness_in;
@@ -67,12 +69,22 @@ namespace
         double density_pay;
         double radius_pay;  
         double friction;
-        double rollFriction;
+        double rollfriction;
         double restitution;
         double pretension;
         bool   history; 
         double maxTens;
         double targetVelocity;
+	//Hedgehog Parameters beyond this point
+	double width;
+	double height;
+	double density1; //Density of the box
+	double friction1;
+	double rollfriction1;
+	double restitution1;
+	double triangle_length;
+        double triangle_height;
+        double prism_height;
     } c =
    {
      0.5366,    // density (kg / length^3)
@@ -84,32 +96,45 @@ namespace
      15.0,     // rod_length (length)
      3.75,      // rod_space (length)
      0.5,         // half payload height (length)
-     20/M_PI,        //payload density (kg/lenght^3)
+     20,        //payload density (kg/length^3)
      0.5,        //payload radius (length)
-     1.0,      // friction (unitless)
+     0.99,      // friction (unitless)
      0.1,     // rollFriction (unitless)
      0.0,      // restitution (?)
      10.0,        // pretension (force)
      false,     // history
      1000000,   // maxTens
-     10000    // targetVelocity
-#if (0)
-     20000     // maxAcc
-#endif // removed 12/10/14     
+     10000,    // targetVelocity
+     1.75, // width (dm)
+     1.75, // length (dm)
+     4.0,  //Density of box (kg / length^3) 
+     0.5,  // friction (unitless)
+     0.01, // rollFriction (unitless) Double check what roll friction of a box means
+     0,  // restitution (?)
+     10.0,     // triangle_length (length) Value not relevant
+     10.0,     // triangle_height (length) Value not relevant
+     20.0,     // prism_height (length) Value not relevant
   };
 } // namespace
 
 TensegrityHedgehogModel::TensegrityHedgehogModel() : tgModel() 
 {
-    //data observer
-    // m_dataObserver("Data_test");
+	origin = btVector3(0,0,0); //Double check if needed
+}
+
+TensegrityHedgehogModel::TensegrityHedgehogModel(btVector3 center) : tgModel() 
+{
+	origin = btVector3(center.getX(), center.getY(), center.getZ()); //Double check if needed
 }
 
 TensegrityHedgehogModel::~TensegrityHedgehogModel()
 {
 }
 
-void TensegrityHedgehogModel::addNodes(tgStructure& s)
+void TensegrityHedgehogModel::addNodes(tgStructure& s,
+			    double edge,
+                            double width,
+                            double height)
 {
     const double half_length = c.rod_length / 2;
 
@@ -128,8 +153,28 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s)
     s.addNode( half_length, 0,           -c.rod_space);   // 11
 
     //Nodes for payload
-    s.addNode(0,c.payload_h,0);
-    s.addNode(0,-c.payload_h,0);
+    s.addNode(0,c.payload_h,0); //12 
+    s.addNode(0,-c.payload_h,0); //13
+	
+    //Hedgehogcage
+    /*s.addNode(-3, 4, 0); // 8 14
+    s.addNode( 3, 4, 0); // 9 15
+    s.addNode(0, 4, 3); // 10 16 
+    s.addNode(0, 4, -3); // 11 17
+    s.addNode(-3, 8, 0); // 12 18
+    s.addNode(3, 8, 0); // 13 19 
+    s.addNode(0, 8, 3); // 14 20 
+    s.addNode(0, 8, -3); // 15 21
+    */
+    s.addNode(-1, 2, 0); // 8 14
+    s.addNode( 1, 2, 0); // 9 15
+    s.addNode(0, 2, 1); // 10 16 
+    s.addNode(0, 2, -1); // 11 17
+    s.addNode(-1, 6, 0); // 12 18
+    s.addNode(1, 6, 0); // 13 19 
+    s.addNode(0, 6, 1); // 14 20 
+    s.addNode(0, 6, -1); // 15 21
+
 }
 
 void TensegrityHedgehogModel::addRods(tgStructure& s)
@@ -143,9 +188,37 @@ void TensegrityHedgehogModel::addRods(tgStructure& s)
     s.addPair(10, 11, "rod");
 
     // Payload
-    s.addPair(12, 13, "payload_rod");
-
+    //s.addPair(12, 13, "payload_rod");
+	
+    //Hedgehogcage
+    s.addPair( 14,  18, "rod");
+    s.addPair( 15,  19, "rod");
+    s.addPair( 16,  20, "rod");
+    s.addPair( 17,  21, "rod");
+    s.addPair( 14,  16, "rod");
+    s.addPair( 14,  17, "rod");
+    s.addPair( 15,  16, "rod");
+    s.addPair( 15,  17, "rod");
+    s.addPair( 18,  20, "rod");
+    s.addPair( 18,  21, "rod");
+    s.addPair( 19,  20, "rod");
+    s.addPair( 19,  21, "rod");
+    //XPairs Top
+    s.addPair( 18,  19, "rod");
+    s.addPair( 20,  21, "rod");
+    //bottom
+    s.addPair( 14,  21, "rod");
+    s.addPair( 16,  17, "rod");
+    s.addPair( 15,  20, "rod");
+    s.addPair( 16,  19, "rod");
+    s.addPair( 15,  21, "rod");
+    s.addPair( 16,  18, "rod");
+    s.addPair( 14,  20, "rod");
+    s.addPair( 17,  19, "rod");
+    s.addPair( 14,  21, "rod");
+    s.addPair( 17,  18, "rod");
 }
+
 
 void TensegrityHedgehogModel::addMuscles(tgStructure& s)
 {
@@ -183,8 +256,9 @@ void TensegrityHedgehogModel::addMuscles(tgStructure& s)
     s.addPair(7, 8,  "muscle");
     s.addPair(7, 9,  "muscle");
 
-    // Payload Muscles
-    s.addPair(0, 13, "muscle_in");
+    // Payload Muscles 
+    /*
+    s.addPair(0, 13, "muscle_in"); 
     s.addPair(1, 12, "muscle_in");
     s.addPair(2, 13, "muscle_in");
     s.addPair(3, 12, "muscle_in");
@@ -195,33 +269,95 @@ void TensegrityHedgehogModel::addMuscles(tgStructure& s)
     s.addPair(8, 13, "muscle_in");
     s.addPair(9, 12, "muscle_in");
     s.addPair(10, 13, "muscle_in");
-    s.addPair(11, 12, "muscle_in");
+    s.addPair(11, 12, "muscle_in");*/
+    
+    // Hedgehog Cage
+    s.addPair(0, 14, "muscle_in");
+    s.addPair(1, 15, "muscle_in");
+    s.addPair(2, 16, "muscle_in");
+    s.addPair(3, 17, "muscle_in");
+    s.addPair(4, 18, "muscle_in");
+    s.addPair(5, 19, "muscle_in");
+    s.addPair(6, 20, "muscle_in");
+    s.addPair(7, 21, "muscle_in");
+    
+    //s.addPair(8, 13, "muscle_in");
+    //s.addPair(9, 12, "muscle_in");
+    //s.addPair(10, 13, "muscle_in");
+    //s.addPair(11, 12, "muscle_in");
+
 
 
 }
 
+void TensegrityHedgehogModel::addNodes(tgStructure& y) {
+    addBoxNodes();
+ 
+        for(std::size_t i=0;i<nodes.size();i+=2) {
+        y.addNode(nodes[i]);
+        y.addNode(nodes[i+1]);
+        y.addPair(i, i+1, "box");
+    }
+    //y.move(btVector3(0, 50, 0)); //  Ability to move box from this function
+}
+
+//Hedgehog Box Nodes
+void TensegrityHedgehogModel::addBoxNodes() {
+    tgNode node; //Creates the height of Hedgehog based on Nodes
+
+    double x1 = 0; // use the distance between vector 1 and vector 2 to control the height
+    double x2 = 1.75;
+    double y1 = 0;
+    double y2 = 1.75;
+    double z1 = 0;
+    double z2 = 1.75*sqrt(2); // The length of the diagonal is the input and the output is the height
+	//For instance if you want a 1 meter height cube you need to provide sqrt 2 for the height
+
+    node = tgNode(x1, y1, z1, "node");
+    nodes.push_back(node);
+
+    node = tgNode(x2, y2, z2, "node");
+    nodes.push_back(node);
+}
+
 void TensegrityHedgehogModel::setup(tgWorld& world)
 {
-
+	//Define configuration for hedgehog
+    const tgBox::Config boxConfig(c.width, c.height, c.density1, c.friction1, c.rollfriction1, c.restitution1);
+	
+	// Define the configurations of the rods and strings
     const tgRod::Config rodConfig(c.radius, c.density, c.friction, 
-				c.rollFriction, c.restitution);
+				c.rollfriction, c.restitution);
 
     const tgRod::Config payConfig(c.radius_pay, c.density_pay, c.friction, 
-                c.rollFriction, c.restitution);
+                c.rollfriction, c.restitution);
     
-    /// @todo acceleration constraint was removed on 12/10/14 Replace with tgKinematicActuator as appropreate
+    // Define configuration for actuators
     tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension * c.stiffness / c.stiffness_in, c.history,
 					    c.maxTens, c.targetVelocity);
 
     tgSpringCableActuator::Config muscleInConfig(c.stiffness_in, c.damping_in, c.pretension, c.history,
                         c.maxTens, c.targetVelocity);
-            
-    // Start creating the structure
+
+    // Start creating the structures
     tgStructure s;
-    addNodes(s);
+    tgStructure y; // Hedgehog
+    // Add nodes to the structure
+    addNodes(y);  //Nodes of Hedgehog
+    addNodes(s, c.triangle_length, c.triangle_height, c.prism_height);
     addRods(s);
+    //addNodes(s); //Fun Glitch: if activated rods become boxes
+
     addMuscles(s);
-    s.move(btVector3(0, 30, 0));
+
+    
+    //Initial location of tensegrity
+    s.move(btVector3(0, 15, 0));
+    
+    //Initial Location and orientation of Hedgehog
+    y.move(btVector3(-10,5, -10));
+    y.addRotation(btVector3(-10,5,-10),btVector3(0,0,1), 180); // Z blue Axis
+    y.addRotation(btVector3(-10,5,-10),btVector3(1,0,0), 260); // X red axis
 
     // Add a rotation to land the struture on a V.
     btVector3 rotationPoint1 = btVector3(0, 0, 0); // origin
@@ -245,12 +381,15 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     spec.addBuilder("payload_rod", new tgRodInfo(payConfig));
     spec.addBuilder("muscle", new tgBasicActuatorInfo(muscleConfig));
     spec.addBuilder("muscle_in", new tgBasicActuatorInfo(muscleInConfig));
+    spec.addBuilder("box", new tgBoxInfo(boxConfig));//Hedgehog
     
     // Create your structureInfo
-    tgStructureInfo structureInfo(s, spec);
+    tgStructureInfo structureInfo(s, spec); //Tensegrity
+    tgStructureInfo structureInfos(y, spec); //Hedgehog
 
     // Use the structureInfo to build ourselves
-    structureInfo.buildInto(*this, world);
+    structureInfo.buildInto(*this, world); //Tensegrity
+    structureInfos.buildInto(*this, world); //Hedgehog
 
     // We could now use tgCast::filter or similar to pull out the
     // models (e.g. muscles) that we want to control. 
@@ -287,8 +426,14 @@ const std::vector<tgSpringCableActuator*>& TensegrityHedgehogModel::getAllMuscle
 {
     return allMuscles;
 }
-    
+
+std::vector<tgRod*>& TensegrityHedgehogModel::getAllRods()
+{
+    return allRods;
+}
+
 void TensegrityHedgehogModel::teardown()
 {
     tgModel::teardown();
 }
+

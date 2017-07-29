@@ -220,7 +220,7 @@ void TensegrityHedgehogModel::addRods(tgStructure& s)
     s.addPair( 5,  6, tgString("rod num", 10));
     s.addPair( 5,  7, tgString("rod num", 11));
 
-//Hedgehog Cover
+//Hedgehogcage
     s.addPair( 8,  12, tgString("rod num", 12));
     s.addPair( 9,  13, tgString("rod num", 13));
     s.addPair( 10,  14, tgString("rod num", 14));
