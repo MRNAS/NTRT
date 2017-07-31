@@ -90,7 +90,7 @@ namespace
      0.5366,    // density (kg / length^3)
      0.3175/2.0,     // radius (length)
      250000.0,   // stiffness of outer muscles (kg / sec^2)
-     500.0,    // stiffness of inner muscles (kg/sec^2)
+     25000.0,    // stiffness of inner muscles (kg/sec^2) 500
      25000.0,    // damping of outer muscles (kg / sec)
      50.0,     //damping of inner muscles (kg/sec)
      15.0,     // rod_length (length)  15
@@ -107,7 +107,7 @@ namespace
      10000,    // targetVelocity
      1, // width (dm)
      1, // length (dm)
-     4.0,  //Density of box (kg / length^3) 
+     0.5,  //Density of box (kg / length^3) 
      0.5,  // friction (unitless)
      0.01, // rollFriction (unitless) Double check what roll friction of a box means
      0,  // restitution (?)
@@ -170,10 +170,10 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s,
     s.addNode( 2, 0, 0); // 9 15
     s.addNode(0, 0, 2); // 10 16  
     s.addNode(0, 0, -2); // 11 17
-    s.addNode(-2, 2, 0); // 12 18
-    s.addNode(2, 2, 0); // 13 19 
-    s.addNode(0, 2, 2); // 14 20 
-    s.addNode(0, 2, -2); // 15 21
+    s.addNode(-2, 2.44, 0); // 12 18
+    s.addNode(2, 2.44, 0); // 13 19 
+    s.addNode(0, 2.44, 2); // 14 20 
+    s.addNode(0, 2.44, -2); // 15 21
 
 }
 
@@ -283,7 +283,8 @@ void TensegrityHedgehogModel::addMuscles(tgStructure& s)
     
     s.addPair(10, 21, "muscle_in"); // 8 middle node, 9  last bottom node
     s.addPair(3, 20, "muscle_in");
-    //s.addPair(10, 13, "muscle_in");
+    
+    //s.addPair(8, 13, "muscle_in");
     //s.addPair(11, 12, "muscle_in");
     
     //s.addPair(0, 14, "muscle_in");
@@ -297,7 +298,7 @@ void TensegrityHedgehogModel::addMuscles(tgStructure& s)
     
     //s.addPair(8, 13, "muscle_in");
     //s.addPair(9, 12, "muscle_in");
-    //s.addPair(10, 13, "muscle_in");
+    //s.addPair(10, 13, "muscle_in");//
     //s.addPair(11, 12, "muscle_in");
 
 
@@ -312,7 +313,10 @@ void TensegrityHedgehogModel::addNodes(tgStructure& y) {
         y.addNode(nodes[i+1]);
         y.addPair(i, i+1, "box");
     }
-    //y.move(btVector3(-10, 2, 0)); //  Ability to move box from this function
+    //y.move(btVector3(0,0, 0)); //  Ability to move box from this function
+    //y.move(btVector3(-10,0, 0));
+    //y.move(btVector3(0,0, 0));
+    //y.move(btVector3(0,50, 0)); //  Ability to move box from this function
 }
 
 //Hedgehog Box Nodes
@@ -348,10 +352,10 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     
     // Define configuration for actuators
     tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension * c.stiffness / c.stiffness_in, c.history,
-					    c.maxTens, c.targetVelocity);
+					    c.maxTens, c.targetVelocity); 
 
     tgSpringCableActuator::Config muscleInConfig(c.stiffness_in, c.damping_in, c.pretension, c.history,
-                        c.maxTens, c.targetVelocity);
+                        c.maxTens, c.targetVelocity); 
 
     // Start creating the structures
     tgStructure s;
@@ -367,11 +371,14 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
     
     //Initial location of tensegrity
     s.move(btVector3(0, 15, 0));
+    //s.move(btVector3(100, 100, 100));
+    
     
     //Initial Location and orientation of Hedgehog
-    y.move(btVector3(-10,5, -10));
-    y.addRotation(btVector3(-10,5,-10),btVector3(0,0,1), 180); // Z blue Axis
-    y.addRotation(btVector3(-10,5,-10),btVector3(1,0,0), 260); // X red axis
+    y.move(btVector3(0,5, 0));
+    y.addRotation(btVector3(0,5,0),btVector3(0,0,1), 180); // Z blue Axis
+    y.addRotation(btVector3(0,5,0),btVector3(1,0,0), 260); // X red axis
+    y.move(btVector3(7,5.5, -8)); //Tricky numbers
 
     // Add a rotation to land the struture on a V.
     btVector3 rotationPoint1 = btVector3(0, 0, 0); // origin
