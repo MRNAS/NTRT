@@ -93,8 +93,8 @@ namespace
      500.0,    // stiffness of inner muscles (kg/sec^2)
      25000.0,    // damping of outer muscles (kg / sec)
      50.0,     //damping of inner muscles (kg/sec)
-     15.0,     // rod_length (length)
-     3.75,      // rod_space (length)
+     15.0,     // rod_length (length)  15
+     3.75,      // rod_space (length) 3.75
      0.5,         // half payload height (length)
      20,        //payload density (kg/length^3)
      0.5,        //payload radius (length)
@@ -105,8 +105,8 @@ namespace
      false,     // history
      1000000,   // maxTens
      10000,    // targetVelocity
-     1.75, // width (dm)
-     1.75, // length (dm)
+     1, // width (dm)
+     1, // length (dm)
      4.0,  //Density of box (kg / length^3) 
      0.5,  // friction (unitless)
      0.01, // rollFriction (unitless) Double check what roll friction of a box means
@@ -166,14 +166,14 @@ void TensegrityHedgehogModel::addNodes(tgStructure& s,
     s.addNode(0, 8, 3); // 14 20 
     s.addNode(0, 8, -3); // 15 21
     */
-    s.addNode(-1, 2, 0); // 8 14
-    s.addNode( 1, 2, 0); // 9 15
-    s.addNode(0, 2, 1); // 10 16 
-    s.addNode(0, 2, -1); // 11 17
-    s.addNode(-1, 6, 0); // 12 18
-    s.addNode(1, 6, 0); // 13 19 
-    s.addNode(0, 6, 1); // 14 20 
-    s.addNode(0, 6, -1); // 15 21
+    s.addNode(-2, 0, 0); // 8 14
+    s.addNode( 2, 0, 0); // 9 15
+    s.addNode(0, 0, 2); // 10 16  
+    s.addNode(0, 0, -2); // 11 17
+    s.addNode(-2, 2, 0); // 12 18
+    s.addNode(2, 2, 0); // 13 19 
+    s.addNode(0, 2, 2); // 14 20 
+    s.addNode(0, 2, -2); // 15 21
 
 }
 
@@ -207,8 +207,9 @@ void TensegrityHedgehogModel::addRods(tgStructure& s)
     s.addPair( 18,  19, "rod");
     s.addPair( 20,  21, "rod");
     //bottom
-    s.addPair( 14,  21, "rod");
+    s.addPair( 14,  15, "rod");
     s.addPair( 16,  17, "rod");
+    
     s.addPair( 15,  20, "rod");
     s.addPair( 16,  19, "rod");
     s.addPair( 15,  21, "rod");
@@ -272,14 +273,27 @@ void TensegrityHedgehogModel::addMuscles(tgStructure& s)
     s.addPair(11, 12, "muscle_in");*/
     
     // Hedgehog Cage
-    s.addPair(0, 14, "muscle_in");
-    s.addPair(1, 15, "muscle_in");
-    s.addPair(2, 16, "muscle_in");
-    s.addPair(3, 17, "muscle_in");
-    s.addPair(4, 18, "muscle_in");
-    s.addPair(5, 19, "muscle_in");
-    s.addPair(6, 20, "muscle_in");
-    s.addPair(7, 21, "muscle_in");
+    s.addPair(2, 17, "muscle_in"); // bottom node
+    s.addPair(1, 18, "muscle_in"); // 
+    s.addPair(9, 15, "muscle_in"); // palce unbalance because it is a middle node keep but remove if prom
+    //s.addPair(4, 18, "muscle_in");// Another middle node
+    s.addPair(5, 14, "muscle_in"); //bottom node
+    s.addPair(6, 19, "muscle_in");
+    s.addPair(7, 16, "muscle_in");
+    
+    s.addPair(10, 21, "muscle_in"); // 8 middle node, 9  last bottom node
+    s.addPair(3, 20, "muscle_in");
+    //s.addPair(10, 13, "muscle_in");
+    //s.addPair(11, 12, "muscle_in");
+    
+    //s.addPair(0, 14, "muscle_in");
+    //s.addPair(1, 15, "muscle_in");
+    //s.addPair(2, 16, "muscle_in");
+    //s.addPair(3, 17, "muscle_in");
+    //s.addPair(4, 18, "muscle_in");
+    //s.addPair(5, 19, "muscle_in");
+    //s.addPair(6, 20, "muscle_in");
+    //s.addPair(7, 21, "muscle_in");
     
     //s.addPair(8, 13, "muscle_in");
     //s.addPair(9, 12, "muscle_in");
@@ -298,7 +312,7 @@ void TensegrityHedgehogModel::addNodes(tgStructure& y) {
         y.addNode(nodes[i+1]);
         y.addPair(i, i+1, "box");
     }
-    //y.move(btVector3(0, 50, 0)); //  Ability to move box from this function
+    //y.move(btVector3(-10, 2, 0)); //  Ability to move box from this function
 }
 
 //Hedgehog Box Nodes
@@ -306,11 +320,11 @@ void TensegrityHedgehogModel::addBoxNodes() {
     tgNode node; //Creates the height of Hedgehog based on Nodes
 
     double x1 = 0; // use the distance between vector 1 and vector 2 to control the height
-    double x2 = 1.75;
+    double x2 = 1;
     double y1 = 0;
-    double y2 = 1.75;
+    double y2 = 1;
     double z1 = 0;
-    double z2 = 1.75*sqrt(2); // The length of the diagonal is the input and the output is the height
+    double z2 = 1*sqrt(2); // The length of the diagonal is the input and the output is the height
 	//For instance if you want a 1 meter height cube you need to provide sqrt 2 for the height
 
     node = tgNode(x1, y1, z1, "node");
