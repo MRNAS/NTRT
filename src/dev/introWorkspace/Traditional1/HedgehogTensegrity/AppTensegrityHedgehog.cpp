@@ -42,6 +42,13 @@
  * @param[in] argv argv[0] is the executable name
  * @return 0
  */
+ 
+ /*tgBoxGround *createGround();
+tgWorld *createWorld();
+tgSimViewGraphics *createGraphicsView(tgWorld *world);
+tgSimView *createView(tgWorld *world);
+void simulate(tgSimulation *simulation);*/
+
 int main(int argc, char** argv)
 {
     std::cout << "AppTensegrityHedgehog" << std::endl;
@@ -56,14 +63,14 @@ int main(int argc, char** argv)
     // the world will delete this
     tgBoxGround* ground = new tgBoxGround(groundConfig);
     
-    const tgWorld::Config config(98.1); // gravity, cm/sec^2  Use this to adjust length scale of world.
+    const tgWorld::Config config(9.81); // gravity, cm/sec^2  Use this to adjust length scale of world.
         // Note, by changing the setting below from 981 to 98.1, we've
         // scaled the world length scale to decimeters not cm.
     tgWorld world(config, ground);
 
-    // Second create the view
+   // Second create the view
     const double timestep_physics = 0.0001; // Seconds
-    const double timestep_graphics = 1.f/60.f; // Seconds
+    const double timestep_graphics = 1.f/60.f; // Seconds // Seconds, AKA render rate. Leave at 1/60 for real-time viewing
     tgSimViewGraphics view(world, timestep_physics, timestep_graphics);
 
     // Third create the simulation
@@ -81,6 +88,31 @@ int main(int argc, char** argv)
     //Teardown is handled by delete, so that should be automatic
     return 0;
 }
+/*
+ //Use for displaying tensegrities in simulation 
+tgSimViewGraphics *createGraphicsView(tgWorld *world) {
+    const double timestep_physics = 1.0 / 60.0 / 10.0; // Seconds
+    const double timestep_graphics = 1.f /60.f; // Seconds, AKA render rate. Leave at 1/60 for real-time viewing
+    return new tgSimViewGraphics(*world, timestep_physics, timestep_graphics); 
+}
+
+//Use for trial episodes of many tensegrities in an experiment 
+tgSimView *createView(tgWorld *world) {
+    const double timestep_physics = 1.0 / 60.0 / 10.0; // Seconds
+    const double timestep_graphics = 1.f /60.f; // Seconds, AKA render rate. Leave at 1/60 for real-time viewing
+    return new tgSimView(*world, timestep_physics, timestep_graphics); 
+}
+
+void simulate(tgSimulation *simulation) {
+    int nEpisodes = 5; // Number of episodes ("trial runs")
+    int nSteps = 3000; // Number of steps in each episode, 60k is 100 seconds (timestep_physics*nSteps)
+    for (int i=0; i<nEpisodes; i++) {
+        simulation->run(nSteps);
+        simulation->reset();
+    }
+}
+*/
+
 
 //TODO: Create a switch scenario for a hilly world with the following code
 // IGNORE FOR THE MOMENT

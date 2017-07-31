@@ -107,7 +107,7 @@ namespace
      10000,    // targetVelocity
      1, // width (dm)
      1, // length (dm)
-     0.5,  //Density of box (kg / length^3) 
+     2,  //Density of box (kg / length^3) 
      0.5,  // friction (unitless)
      0.01, // rollFriction (unitless) Double check what roll friction of a box means
      0,  // restitution (?)
@@ -418,9 +418,37 @@ void TensegrityHedgehogModel::setup(tgWorld& world)
 
     // call the onSetup methods of all observed things e.g. controllers
     notifySetup();
+    
+    btVector3 location(0,0,0);
+    btVector3 rotation(0.0,0,0.0);
+    btVector3 angular(0,60,0); //Rad/sec y is up.
+    //btVector3 angular(30,0,0);
+    this->moveModel(location,rotation,angular);
 
     // Actually setup the children
     tgModel::setup(world);
+}
+
+void TensegrityHedgehogModel::moveModel(btVector3 positionVector,btVector3 rotationVector,btVector3 angularVector)
+{
+    std::vector<tgBox *> boxes=find<tgBox>("box");
+
+	btQuaternion initialRotationQuat;
+	initialRotationQuat.setEuler(rotationVector[0],rotationVector[1],rotationVector[2]);
+	btTransform initialTransform;
+	initialTransform.setIdentity();
+	initialTransform.setRotation(initialRotationQuat);
+	initialTransform.setOrigin(positionVector);
+	
+	
+	for(int i=0;i<boxes.size();i++)
+	{
+			//rods[i]->getPRigidBody()->setLinearVelocity(speedVector);
+			//rods[i]->setAngularFactor(btScalar(5)); 
+			//rods[i]->getPRigidBody()->applyTorque(angularVector);
+			boxes[i]->getPRigidBody()->setAngularVelocity(angularVector);
+			boxes[i]->getPRigidBody()->setWorldTransform(initialTransform * boxes[i]->getPRigidBody()->getWorldTransform());
+	}
 }
 
 void TensegrityHedgehogModel::step(double dt)
