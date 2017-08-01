@@ -105,8 +105,8 @@ namespace
      false,     // history
      1000000,   // maxTens
      10000,    // targetVelocity
-     .25, // width (dm)
-     .25, // length (dm)
+     .375, // width (dm)
+     .375, // length (dm)
      2,  //Density of box (kg / length^3) 
      0.5,  // friction (unitless)
      0.01, // rollFriction (unitless) Double check what roll friction of a box means
@@ -139,7 +139,7 @@ void TensegrityHedgehogModel8::addNodes(tgStructure& s,
     const double half_length = c.rod_length / 2;
 
     // Nodes for struts
-	s.addNode(-1.85, 0, -.43);//0
+	/*s.addNode(-1.85, 0, -.43);//0
 	s.addNode(-0.76, -3.69, 0.65);//1
 	s.addNode(-1.85, 0, -1.960);//2
 	s.addNode(1.85, -1.08, -3.04);//3
@@ -162,21 +162,46 @@ void TensegrityHedgehogModel8::addNodes(tgStructure& s,
 	s.addNode(1.85, -3.69, -1.96);//20
 	s.addNode(-1.85, -2.61, -3.04);//21
 	s.addNode(0.76, -3.69, 0.65);//22
-	s.addNode(1.85, -2.61, -3.04);//23
+	s.addNode(1.85, -2.61, -3.04);//23*/
+	
+	s.addNode(-1.85, 0, 1.415);//0
+	s.addNode(-0.76, -3.69, 2.495);//1
+	s.addNode(-1.85, 0, -0.115);//2
+	s.addNode(1.85, -1.08, -1.195);//3
+	s.addNode(-0.76, 0, -1.195);//4
+	s.addNode(-1.85, -3.69, -0.115);//5
+	s.addNode(0.76, 0, -1.195);//6
+	s.addNode(1.85, -1.08, 2.495);//7
+	s.addNode(1.85, 0, -0.115);//8
+	s.addNode(0.76, -3.69, -1.195);//9
+	s.addNode(1.85, 0, 1.415);//10
+	s.addNode(-1.85, -1.08, 2.495);//11
+	s.addNode(0.76, 0, 1.195);//12
+	s.addNode(1.85, -3.69, 1.415);//13
+	s.addNode(-.76, 0, 2.495);//14
+	s.addNode(-1.85, -1.08, -1.195);//15
+	s.addNode(-1.85, -3.69, 1.415);//16
+	s.addNode(1.85, -2.61, 2.495);//17
+	s.addNode(-0.76, -3.69, -1.195);//18
+	s.addNode(-1.85, -2.61, 2.495);//19
+	s.addNode(1.85, -3.69, -0.115);//20
+	s.addNode(-1.85, -2.61, -1.195);//21
+	s.addNode(0.76, -3.69, 2.495);//22
+	s.addNode(1.85, -2.61, -1.195);//23
 
     //Nodes for payload
     //s.addNode(0,c.payload_h,0); //12 
     //s.addNode(0,-c.payload_h,0); //13
 	
     //Hedgehog Cage
-    s.addNode(-0.5, -1.25, -0.5); // 24
-    s.addNode( 0.5, -1.25, 0.5); // 25
-    s.addNode(0.5, -1.25, -0.5); // 26  
-    s.addNode(-0.5, -1.25, 0.5); // 27
-    s.addNode(-0.5, -.25, -0.5); // 28
-    s.addNode(0.5, -.25, 0.5); //  29 
-    s.addNode(0.5, -.25, -0.5); //  30 
-    s.addNode(-0.5, -.25, 0.5); //  31
+    s.addNode(-0.5, -2.35, -0.5); // 24
+    s.addNode( 0.5, -2.35, 0.5); // 25
+    s.addNode(0.5, -2.35, -0.5); // 26  
+    s.addNode(-0.5, -2.35, 0.5); // 27
+    s.addNode(-0.5, -1.35, -0.5); // 28
+    s.addNode(0.5, -1.35, 0.5); //  29 
+    s.addNode(0.5, -1.35, -0.5); //  30 
+    s.addNode(-0.5, -1.35, 0.5); //  31
 
 }
 
@@ -335,11 +360,11 @@ void TensegrityHedgehogModel8::addBoxNodes() {
     tgNode node; //Creates the height of Hedgehog based on Nodes
 
     double x1 = 0; // use the distance between vector 1 and vector 2 to control the height
-    double x2 = .25;
+    double x2 = .375;
     double y1 = 0;
-    double y2 = .25;
+    double y2 = .375;
     double z1 = 0;
-    double z2 = .25*sqrt(2); // The length of the diagonal is the input and the output is the height
+    double z2 = .375*sqrt(2); // The length of the diagonal is the input and the output is the height
 	//For instance if you want a 1 meter height cube you need to provide sqrt 2 for the height
 
     node = tgNode(x1, y1, z1, "node");
@@ -381,14 +406,15 @@ void TensegrityHedgehogModel8::setup(tgWorld& world)
 
     
     //Initial location of tensegrity
+    s.move(btVector3(0, 0, 0));
     s.move(btVector3(0, 6, 0));
     //s.move(btVector3(100, 100, 100));
     
     
     //Initial Location and orientation of Hedgehog
-    y.move(btVector3(0,5, 0));
-    y.addRotation(btVector3(0,5,0),btVector3(0,0,1), 180); // Z blue Axis
-    y.addRotation(btVector3(0,5,0),btVector3(1,0,0), 260); // X red axis
+    y.move(btVector3(0,4.15, 0));
+    y.addRotation(btVector3(0,4.15,0),btVector3(0,0,1), 180); // Z blue Axis
+    y.addRotation(btVector3(0,4.15,0),btVector3(1,0,0), 260); // X red axis
 
 
     // Add a rotation to land the struture on a V.
