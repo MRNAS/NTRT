@@ -101,13 +101,13 @@ namespace
      0.99,      // friction (unitless)
      0.1,     // rollFriction (unitless)
      0.0,      // restitution (?)
-     10.0,        // pretension (force)
+     0.0,        // pretension (force)
      false,     // history
      1000000,   // maxTens
      10000,    // targetVelocity
      .45, // width (dm)
      .45, // length (dm)
-     2,  //Density of box (kg / length^3) 
+     .2,  //Density of box (kg / length^3) 
      0.5,  // friction (unitless)
      0.01, // rollFriction (unitless) Double check what roll friction of a box means
      0,  // restitution (?)
@@ -163,31 +163,6 @@ void TensegrityHedgehogModel8::addNodes(tgStructure& s,
 	s.addNode(-1.85, -2.61, -3.04);//21
 	s.addNode(0.76, -3.69, 0.65);//22
 	s.addNode(1.85, -2.61, -3.04);//23
-	/*
-	s.addNode(-1.85, 0, 1.415);//0
-	s.addNode(-0.76, -3.69, 2.495);//1
-	s.addNode(-1.85, 0, -0.115);//2
-	s.addNode(1.85, -1.08, -1.195);//3
-	s.addNode(-0.76, 0, -1.195);//4
-	s.addNode(-1.85, -3.69, -0.115);//5
-	s.addNode(0.76, 0, -1.195);//6
-	s.addNode(1.85, -1.08, 2.495);//7
-	s.addNode(1.85, 0, -0.115);//8
-	s.addNode(0.76, -3.69, -1.195);//9
-	s.addNode(1.85, 0, 1.415);//10
-	s.addNode(-1.85, -1.08, 2.495);//11
-	s.addNode(0.76, 0, 1.195);//12
-	s.addNode(1.85, -3.69, 1.415);//13
-	s.addNode(-.76, 0, 2.495);//14
-	s.addNode(-1.85, -1.08, -1.195);//15
-	s.addNode(-1.85, -3.69, 1.415);//16
-	s.addNode(1.85, -2.61, 2.495);//17
-	s.addNode(-0.76, -3.69, -1.195);//18
-	s.addNode(-1.85, -2.61, 2.495);//19
-	s.addNode(1.85, -3.69, -0.115);//20
-	s.addNode(-1.85, -2.61, -1.195);//21
-	s.addNode(0.76, -3.69, 2.495);//22
-	s.addNode(1.85, -2.61, -1.195);//23*/
 
     //Nodes for payload
     //s.addNode(0,c.payload_h,0); //12 
@@ -296,52 +271,17 @@ void TensegrityHedgehogModel8::addMuscles(tgStructure& s)
     s.addPair(20, 13,  "muscle");
     s.addPair(16, 5,  "muscle");
 
-    // Payload Muscles 
-    /*
-    s.addPair(0, 13, "muscle_in"); 
-    s.addPair(1, 12, "muscle_in");
-    s.addPair(2, 13, "muscle_in");
-    s.addPair(3, 12, "muscle_in");
-    s.addPair(4, 13, "muscle_in");
-    s.addPair(5, 13, "muscle_in");
-    s.addPair(6, 12, "muscle_in");
-    s.addPair(7, 12, "muscle_in");
-    s.addPair(8, 13, "muscle_in");
-    s.addPair(9, 12, "muscle_in");
-    s.addPair(10, 13, "muscle_in");
-    s.addPair(11, 12, "muscle_in");*/
+    // Hedgehog Cage Internal cables
+    s.addPair(1, 24, "muscle_in"); //Bottom 
+    s.addPair(5, 26, "muscle_in"); //Bottom 
+    s.addPair(9, 25, "muscle_in"); //Bottom
+    s.addPair(13, 27, "muscle_in"); //Bottom
     
-    // Hedgehog Cage
-    s.addPair(2, 17, "muscle_in"); // bottom node
-    s.addPair(1, 18, "muscle_in"); // 
-    s.addPair(9, 15, "muscle_in"); // palce unbalance because it is a middle node keep but remove if prom
-    //s.addPair(4, 18, "muscle_in");// Another middle node
-    s.addPair(5, 14, "muscle_in"); //bottom node
-    s.addPair(6, 19, "muscle_in");
-    s.addPair(7, 16, "muscle_in");
+    s.addPair(0, 28, "muscle_in"); //Top
+    s.addPair(4, 30, "muscle_in"); // Top
+    s.addPair(8, 29, "muscle_in"); // Top
+    s.addPair(12,  31, "muscle_in"); // Top
     
-    s.addPair(10, 21, "muscle_in"); // 8 middle node, 9  last bottom node
-    s.addPair(3, 20, "muscle_in");
-    
-    //s.addPair(8, 13, "muscle_in");
-    //s.addPair(11, 12, "muscle_in");
-    
-    //s.addPair(0, 14, "muscle_in");
-    //s.addPair(1, 15, "muscle_in");
-    //s.addPair(2, 16, "muscle_in");
-    //s.addPair(3, 17, "muscle_in");
-    //s.addPair(4, 18, "muscle_in");
-    //s.addPair(5, 19, "muscle_in");
-    //s.addPair(6, 20, "muscle_in");
-    //s.addPair(7, 21, "muscle_in");
-    
-    //s.addPair(8, 13, "muscle_in");
-    //s.addPair(9, 12, "muscle_in");
-    //s.addPair(10, 13, "muscle_in");//
-    //s.addPair(11, 12, "muscle_in");
-
-
-
 }
 
 void TensegrityHedgehogModel8::addNodes(tgStructure& y) {
@@ -352,7 +292,6 @@ void TensegrityHedgehogModel8::addNodes(tgStructure& y) {
         y.addNode(nodes[i+1]);
         y.addPair(i, i+1, "box");
     }
-    //y.move(btVector3(0,0, 0)); //  Ability to move box from this function
 }
 
 //Hedgehog Box Nodes
