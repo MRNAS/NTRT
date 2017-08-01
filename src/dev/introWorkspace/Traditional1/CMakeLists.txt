@@ -7,4 +7,5 @@ Subdirs(
 	Gyroexp
 	spinbox
 	HedgehogTensegrity
+	8HedgeTensegrity
 )
