@@ -27,8 +27,7 @@
 #include "TensegrityHedgehogModel12.h"
 //#include "LengthController.h"
 // This library
-#include "core/terrain/tgBoxGround.h" //moon
-//#include "core/terrain/tgImportGround.h" //Moon World
+#include "core/terrain/tgBoxGround.h"
 #include "core/tgModel.h"
 #include "core/tgSimViewGraphics.h"
 #include "core/tgSimulation.h"
@@ -41,20 +40,11 @@
 #include "LinearMath/btVector3.h"
 // The C++ Standard Library
 #include <iostream>
-//Moon World
-// C++ Filestream
-#include <fstream>
-// C++ String
-#include <string>
-// C++ Math
-#include <math.h>
 
 /**
  * The entry point.
  * @param[in] argc the number of command-line arguments
  * @param[in] argv argv[0] is the executable name
- *@param[in] argv argv[1] is the path of the YAML encoded structure
- * @param[in] argv argv[2] is the path of the .txt file with triangle verticies
  * @return 0
  */
  
@@ -66,7 +56,7 @@ void simulate(tgSimulation *simulation);*/
 
 int main(int argc, char** argv)
 {
-    std::cout << "AppTensegrityHedgehog12" << std::endl; //moon
+    std::cout << "AppTensegrityHedgehog12" << std::endl;
 
     // First create the ground and world
     
@@ -74,50 +64,6 @@ int main(int argc, char** argv)
     const double yaw = 0.0;
     const double pitch = 0.0; 
     const double roll = 0.0;
-//Moon 
-	/*
-    btVector3 orientation = btVector3(yaw, pitch, roll);
-    const double friction = 0.5;
-    const double restitution = 0.0;
-    btVector3 origin = btVector3(0.0, 0.0, 0.0);
-    const double margin = 0.05;
-    const double offset = 0;
-    const double scalingFactor = 100;
-	
- // Configure ground characteristics
-    const tgImportGround::Config groundConfig(orientation, friction, restitution, origin, margin, offset, scalingFactor);	
-	
-	// Get filename from argv
-    std::string filename_in = argv[2];
-
-    // Check filename
-    if (filename_in.find(".txt") == std::string::npos) {
-        std::cout << "Incorrect filetype, input file should be a .txt file" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-
-    //Create filestream
-    std::fstream file_in;
-
-    // Open filestream
-    file_in.open(filename_in.c_str(), std::fstream::in);
-
-    // Check if input file opened successfully
-    if (!file_in.is_open()) {
-        std::cout << "Failed to open input file" << std::endl;
-        exit(EXIT_FAILURE);
-    }
-    else {
-        std::cout << "Input file opened successfully" << std::endl;
-    }
-    
-       tgImportGround* ground = new tgImportGround(groundConfig, file_in);
-
-    const tgWorld::Config config(9.81); // gravity, dm/sec^2
-    tgWorld world(config, ground);
-    */
-//Moon
-
     const tgBoxGround::Config groundConfig(btVector3(yaw, pitch, roll));
     // the world will delete this
     tgBoxGround* ground = new tgBoxGround(groundConfig);
@@ -137,8 +83,7 @@ int main(int argc, char** argv)
 
     // Fourth create the models with their controllers and add the models to the
     // simulation
-    TensegrityHedgehogModel12* const myModel = new TensegrityHedgehogModel12(); 
-  
+    TensegrityHedgehogModel12* const myModel = new TensegrityHedgehogModel12();
     
     //Controllers
     // Create the controller

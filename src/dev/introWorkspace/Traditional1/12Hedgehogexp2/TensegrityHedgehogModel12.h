@@ -103,7 +103,6 @@ public:
      * to itself 
      */
     virtual void onVisit(tgModelVisitor& r);
-
     
     /**
      * Return a vector of all muscles for the controllers to work with.
