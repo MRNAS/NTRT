@@ -107,8 +107,8 @@ namespace
      false,     // history
      1000000,   // maxTens
      10000,    // targetVelocity
-     .925, // width (dm)
-     .925, // length (dm)
+     0.4625, // width (dm)
+     0.4625, // length (dm)
      .8,  //Density of box (kg / length^3) 
      0.5,  // friction (unitless)
      0.01, // rollFriction (unitless) Double check what roll friction of a box means
@@ -141,6 +141,7 @@ void TensegrityHedgehogModel12::addNodes(tgStructure& s,
     //const double half_length = c.rod_length / 2;  //Not needed
 
     // Nodes for struts
+	
 	s.addNode(-1.85, 0, -.43);//0
 	s.addNode(-0.76, -3.69, 0.65);//1
 	s.addNode(-1.85, 0, -1.960);//2
@@ -165,21 +166,80 @@ void TensegrityHedgehogModel12::addNodes(tgStructure& s,
 	s.addNode(-1.85, -2.61, -3.04);//21
 	s.addNode(0.76, -3.69, 0.65);//22
 	s.addNode(1.85, -2.61, -3.04);//23
+	
+	
+	/*
+	s.addNode(-1.85,3.69,0.77);//0
+	s.addNode(-0.76,1.85,1.85);//1
+	s.addNode(-1.85 ,1.845, -0.765);//2
+	s.addNode(1.85 ,0.765, -1.845);//3
+	s.addNode(-0.76, 1.845, -1.845);//4
+	s.addNode(-1.85, -1.845, -0.765);//5
+	s.addNode(0.76,1.845,-1.845);//6
+	s.addNode(1.85,0.765,1.845);//7
+	s.addNode(1.85,1.845,-0.765);//8
+	s.addNode(0.76,-1.845,-1.845);//9
+	s.addNode(1.85,1.845,0.765);//10
+	s.addNode(-1.85,0.765,1.845);//11
+	s.addNode(0.76,1.845,1.845);//12
+	s.addNode(1.85,-1.845,0.765);//13
+	s.addNode(-0.76,1.845,1.845);//14
+	s.addNode(-1.85,0.765,-1.845);//15
+	s.addNode(-1.85,-1.845,0.765);//16
+	s.addNode(1.85,-0.765,1.845);//17
+	s.addNode(-0.76,-1.845,-1.845);//18
+	s.addNode(-1.85,-0.765,1.845);//19
+	s.addNode(1.85,-1.845,-0.765);//20
+	s.addNode(-1.85,-0.765,-1.845);//21
+	s.addNode(0.76,-1.845,1.845);//22
+	s.addNode(1.85,-0.765,-1.845);//23
 
+
+1.85,0.77,-1.85
+-0.76,1.85,-1.85
+-1.85,-1.85,-0.77
+0.76,1.85,-1.85
+1.85,0.77,1.85
+1.85,1.85,-0.77
+0.76,-1.85,-1.85
+1.85,1.85,0.77
+-1.85,0.77,1.85
+0.76,1.85,1.85
+1.85,-1.85,0.77
+-0.76,1.85,1.85
+-1.85,0.77,-1.85
+-1.85,-1.85,0.77
+1.85,-0.77,1.85
+-0.76,-1.85,-1.85
+-1.85,-0.77,1.85
+1.85,-1.85,-0.77
+-1.85,-0.77,-1.85
+0.76,-1.85,1.85
+1.85,-0.77,-1.85
+*/
     //Nodes for payload
     //s.addNode(0,c.payload_h,0); //12 
     //s.addNode(0,-c.payload_h,0); //13
 	
     //Hedgehog Cage
-    s.addNode(-1, -2.85, -1.7); // 24
-    s.addNode( 1, -2.85, 0.3); // 25
-    s.addNode(1, -2.85, -1.7); // 26  
-    s.addNode(-1, -2.85, 0.3); // 27
-    s.addNode(-1, -0.85, -1.7); // 28
-    s.addNode(1, -0.85, 0.3); //  29 
-    s.addNode(1, -0.85, -1.7); //  30 
-    s.addNode(-1, -0.85, 0.3); //  31
-
+    s.addNode(-0.5, -2.35, -1.2); // 24
+    s.addNode( 0.5, -2.35, -0.2); // 25
+    s.addNode(0.5, -2.35, -1.2); // 26  
+    s.addNode(-0.5, -2.35, -0.2); // 27
+    s.addNode(-0.5, -1.35, -1.2); // 28
+    s.addNode(0.5, -1.35, -0.2); //  29 
+    s.addNode(0.5, -1.35, -1.2); //  30 
+    s.addNode(-0.5, -1.35, -0.2); //  31
+    
+    //Central Nodes
+    s.addNode(0,-1.85, -1.2); // 32/ 24 to 30
+    s.addNode(0, -1.85, -0.2); // 33/ 29 to 27
+    s.addNode(-0.5,-1.85, -0.7); // 34/ 24 to 31
+    //s.addNode(1, -1.85, -0.7); // 35/ 29 to  26
+    //s.addNode(0,-1.85, -1.7); // 36/  to 
+    //s.addNode(0, -1.85, 0.3); // 37/  to 
+    
+    
 }
 
 void TensegrityHedgehogModel12::addRods(tgStructure& s)
@@ -214,7 +274,9 @@ void TensegrityHedgehogModel12::addRods(tgStructure& s)
     s.addPair( 28,  31, "payload_rod");
     s.addPair( 29,  30, "payload_rod");
     s.addPair( 29,  31, "payload_rod");
-    //XPairs Top
+    
+    //XPairs 
+    //Top
     s.addPair( 28,  29, "payload_rod");
     s.addPair( 30,  31, "payload_rod");
     //bottom
@@ -222,12 +284,26 @@ void TensegrityHedgehogModel12::addRods(tgStructure& s)
     s.addPair( 26,  27, "payload_rod");
     //All other
     s.addPair( 25,  30, "payload_rod");
-    s.addPair( 26,  29, "payload_rod");
+    
     s.addPair( 25,  31, "payload_rod");
     s.addPair( 26,  28, "payload_rod");
-    s.addPair( 24,  30, "payload_rod");
-    s.addPair( 27,  29, "payload_rod");
-    s.addPair( 24,  31, "payload_rod");
+    // Middle Pairs Change
+   s.addPair( 24,  30, "payload_rod");// Middle Pairs Change
+  // s.addPair( 24,  32, "payload_rod");
+   //s.addPair( 32,  30, "payload_rod");
+   
+   s.addPair( 27,  29, "payload_rod");
+   //s.addPair( 27,  33, "payload_rod");
+   //s.addPair( 33,  29, "payload_rod");
+   
+   s.addPair( 24,  31, "payload_rod");
+   //s.addPair( 24,  34, "payload_rod");
+   //s.addPair( 34,  31, "payload_rod");
+   
+   s.addPair( 26,  29, "payload_rod");
+   //s.addPair( 26,  35, "payload_rod");
+   //s.addPair( 35,  29, "payload_rod");
+    // Middle Pairs Change
     s.addPair( 27,  28, "payload_rod");
 }
 
@@ -272,7 +348,7 @@ void TensegrityHedgehogModel12::addMuscles(tgStructure& s)
     s.addPair(9, 20,  "muscle");
     s.addPair(20, 13,  "muscle");
     s.addPair(16, 5,  "muscle");
-
+/*
     // Hedgehog Cage Internal cables
     s.addPair(1, 24, "muscle_in"); //Bottom 
     s.addPair(5, 26, "muscle_in"); //Bottom 
@@ -283,6 +359,14 @@ void TensegrityHedgehogModel12::addMuscles(tgStructure& s)
     s.addPair(4, 30, "muscle_in"); // Top
     s.addPair(8, 29, "muscle_in"); // Top
     s.addPair(12,  31, "muscle_in"); // Top
+    */
+    //Experimetal Center Nodes
+    /*s.addPair(4, 32, "muscle_in"); 
+    s.addPair(8, 33, "muscle_in");
+    s.addPair(12, 34, "muscle_in");*/
+    //s.addPair(5, 35, "muscle_in");
+    //s.addPair(, 36, "muscle_in");
+    //s.addPair(, 37, "muscle_in");
     
 }
 
@@ -301,11 +385,11 @@ void TensegrityHedgehogModel12::addBoxNodes() {
     tgNode node; //Creates the height of Hedgehog based on Nodes
 
     double x1 = 0; // use the distance between vector 1 and vector 2 to control the height
-    double x2 = .925;
+    double x2 =  0.4625;
     double y1 = 0;
-    double y2 = .925;
+    double y2 = 0.4625;
     double z1 = 0;
-    double z2 = .925*sqrt(2); // The length of the diagonal is the input and the output is the height
+    double z2 =  0.4625*sqrt(2); // The length of the diagonal is the input and the output is the height
 	//For instance if you want a 1 meter height cube you need to provide sqrt 2 for the height
 
     node = tgNode(x1, y1, z1, "node");
@@ -349,7 +433,6 @@ void TensegrityHedgehogModel12::setup(tgWorld& world)
 
     
     //Initial location of tensegrity
-    s.move(btVector3(0, 0, 0));
     s.move(btVector3(0, 6, 0));
     //s.move(btVector3(100, 100, 100));
     

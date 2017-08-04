@@ -5,5 +5,6 @@ subdirs(
   tgBoxAnchorDebug
   Traditional
   Traditional1
+  IntroSkeleton
 )
 

@@ -49,7 +49,7 @@ LengthController::~LengthController()
 {
 }	
 
-void LengthController::onSetup(TensegrityHedgehogModel& subject)
+void LengthController::onSetup(threeBarModel& subject)
 {
 
   m_controllers.clear(); //clear vector of controllers
@@ -82,7 +82,7 @@ void LengthController::onSetup(TensegrityHedgehogModel& subject)
     }
 }
 
-void LengthController::onStep(TensegrityHedgehogModel& subject, double dt)
+void LengthController::onStep(threeBarModel& subject, double dt)
 {
   if (dt <= 0.0) {
     throw std::invalid_argument("dt is not positive");

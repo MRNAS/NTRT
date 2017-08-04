@@ -17,8 +17,8 @@ add_executable(App3BarTraditional
     App3BarTraditional.cpp
 ) 
 
-# UN-COMMENT these lines for 6.1
-#add_executable(App3BarYAML
-#    LengthControllerYAML.cpp
-#    App3BarYAML.cpp
-#) 
+ UN-COMMENT these lines for 6.1
+add_executable(App3BarYAML
+    LengthControllerYAML.cpp
+    App3BarYAML.cpp
+) 

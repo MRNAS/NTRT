@@ -11,12 +11,13 @@ link_libraries(tgcreator
 		yaml-cpp
 		TensegrityModel)
 
-add_executable(App3BarTraditionalX
+add_executable(App3BarTraditional
     threeBarModel.cpp
+    LengthController.cpp
     App3BarTraditional.cpp
 ) 
 
-add_executable(App3BarYAML1
-    App3BarYAML.cpp
+add_executable(App3BarYAML
     LengthControllerYAML.cpp
+    App3BarYAML.cpp
 ) 
