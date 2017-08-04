@@ -222,22 +222,24 @@ void TensegrityHedgehogModel12::addNodes(tgStructure& s,
     //s.addNode(0,-c.payload_h,0); //13
 	
     //Hedgehog Cage
-    s.addNode(-0.5, -2.35, -1.2); // 24
+    //Down
+    s.addNode(-0.5, -2.35, -1.2); // 24 --
     s.addNode( 0.5, -2.35, -0.2); // 25
     s.addNode(0.5, -2.35, -1.2); // 26  
     s.addNode(-0.5, -2.35, -0.2); // 27
+    //Up
     s.addNode(-0.5, -1.35, -1.2); // 28
-    s.addNode(0.5, -1.35, -0.2); //  29 
+    s.addNode(0.5, -1.35, -0.2); //  29 ++
     s.addNode(0.5, -1.35, -1.2); //  30 
     s.addNode(-0.5, -1.35, -0.2); //  31
     
-    //Central Nodes
+    //Central Outter Nodes
     s.addNode(0,-1.85, -1.2); // 32/ 24 to 30
     s.addNode(0, -1.85, -0.2); // 33/ 29 to 27
     s.addNode(-0.5,-1.85, -0.7); // 34/ 24 to 31
-    //s.addNode(1, -1.85, -0.7); // 35/ 29 to  26
-    //s.addNode(0,-1.85, -1.7); // 36/  to 
-    //s.addNode(0, -1.85, 0.3); // 37/  to 
+    s.addNode(0.5, -1.85, -0.7); // 35/ 29 to 26
+    s.addNode(0, -2.35, -0.8); // 36/  to 
+    s.addNode(0, -1.35, -0.8); // 37/  to 
     
     
 }
@@ -277,10 +279,10 @@ void TensegrityHedgehogModel12::addRods(tgStructure& s)
     
     //XPairs 
     //Top
-    s.addPair( 28,  29, "payload_rod");
+    //s.addPair( 28,  29, "payload_rod");
     s.addPair( 30,  31, "payload_rod");
     //bottom
-    s.addPair( 24,  25, "payload_rod");
+    //s.addPair( 24,  25, "payload_rod");
     s.addPair( 26,  27, "payload_rod");
     //All other
     s.addPair( 25,  30, "payload_rod");
@@ -288,21 +290,30 @@ void TensegrityHedgehogModel12::addRods(tgStructure& s)
     s.addPair( 25,  31, "payload_rod");
     s.addPair( 26,  28, "payload_rod");
     // Middle Pairs Change
-   s.addPair( 24,  30, "payload_rod");// Middle Pairs Change
-  // s.addPair( 24,  32, "payload_rod");
-   //s.addPair( 32,  30, "payload_rod");
+  // s.addPair( 24,  30, "payload_rod");// Middle Pairs Change
+   s.addPair( 24,  32, "payload_rod");
+   s.addPair( 32,  30, "payload_rod");
    
-   s.addPair( 27,  29, "payload_rod");
-   //s.addPair( 27,  33, "payload_rod");
-   //s.addPair( 33,  29, "payload_rod");
+   //s.addPair( 27,  29, "payload_rod");
+   s.addPair( 27,  33, "payload_rod");
+   s.addPair( 33,  29, "payload_rod");
    
-   s.addPair( 24,  31, "payload_rod");
-   //s.addPair( 24,  34, "payload_rod");
-   //s.addPair( 34,  31, "payload_rod");
+   //s.addPair( 24,  31, "payload_rod");
+   s.addPair( 24,  34, "payload_rod");
+   s.addPair( 34,  31, "payload_rod");
    
-   s.addPair( 26,  29, "payload_rod");
-   //s.addPair( 26,  35, "payload_rod");
-   //s.addPair( 35,  29, "payload_rod");
+   //s.addPair( 26,  29, "payload_rod");
+   s.addPair( 26,  35, "payload_rod");
+   s.addPair( 35,  29, "payload_rod");
+    
+     //s.addPair( 24,  25, "payload_rod");
+    s.addPair( 24,  36, "payload_rod");
+    s.addPair( 36,  25, "payload_rod");
+    
+    //s.addPair( 28,  29, "payload_rod");
+    s.addPair( 28,  37, "payload_rod");
+    s.addPair( 37,  29, "payload_rod");
+    
     // Middle Pairs Change
     s.addPair( 27,  28, "payload_rod");
 }
@@ -360,10 +371,13 @@ void TensegrityHedgehogModel12::addMuscles(tgStructure& s)
     s.addPair(8, 29, "muscle_in"); // Top
     s.addPair(12,  31, "muscle_in"); // Top
     */
-    //Experimetal Center Nodes
-    /*s.addPair(4, 32, "muscle_in"); 
+    //Experimetal Center Nodes CHANGE
+    s.addPair(4, 32, "muscle_in"); 
     s.addPair(8, 33, "muscle_in");
-    s.addPair(12, 34, "muscle_in");*/
+    s.addPair(12, 34, "muscle_in");
+    s.addPair(0, 35, "muscle_in"); 
+    s.addPair(1, 36, "muscle_in");
+    s.addPair(5, 37, "muscle_in");
     //s.addPair(5, 35, "muscle_in");
     //s.addPair(, 36, "muscle_in");
     //s.addPair(, 37, "muscle_in");
