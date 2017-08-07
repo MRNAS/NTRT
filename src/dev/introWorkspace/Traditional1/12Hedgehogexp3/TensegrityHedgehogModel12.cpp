@@ -168,55 +168,6 @@ void TensegrityHedgehogModel12::addNodes(tgStructure& s,
 	s.addNode(1.85, -2.61, -3.04);//23
 	
 	
-	/*
-	s.addNode(-1.85,3.69,0.77);//0
-	s.addNode(-0.76,1.85,1.85);//1
-	s.addNode(-1.85 ,1.845, -0.765);//2
-	s.addNode(1.85 ,0.765, -1.845);//3
-	s.addNode(-0.76, 1.845, -1.845);//4
-	s.addNode(-1.85, -1.845, -0.765);//5
-	s.addNode(0.76,1.845,-1.845);//6
-	s.addNode(1.85,0.765,1.845);//7
-	s.addNode(1.85,1.845,-0.765);//8
-	s.addNode(0.76,-1.845,-1.845);//9
-	s.addNode(1.85,1.845,0.765);//10
-	s.addNode(-1.85,0.765,1.845);//11
-	s.addNode(0.76,1.845,1.845);//12
-	s.addNode(1.85,-1.845,0.765);//13
-	s.addNode(-0.76,1.845,1.845);//14
-	s.addNode(-1.85,0.765,-1.845);//15
-	s.addNode(-1.85,-1.845,0.765);//16
-	s.addNode(1.85,-0.765,1.845);//17
-	s.addNode(-0.76,-1.845,-1.845);//18
-	s.addNode(-1.85,-0.765,1.845);//19
-	s.addNode(1.85,-1.845,-0.765);//20
-	s.addNode(-1.85,-0.765,-1.845);//21
-	s.addNode(0.76,-1.845,1.845);//22
-	s.addNode(1.85,-0.765,-1.845);//23
-
-
-1.85,0.77,-1.85
--0.76,1.85,-1.85
--1.85,-1.85,-0.77
-0.76,1.85,-1.85
-1.85,0.77,1.85
-1.85,1.85,-0.77
-0.76,-1.85,-1.85
-1.85,1.85,0.77
--1.85,0.77,1.85
-0.76,1.85,1.85
-1.85,-1.85,0.77
--0.76,1.85,1.85
--1.85,0.77,-1.85
--1.85,-1.85,0.77
-1.85,-0.77,1.85
--0.76,-1.85,-1.85
--1.85,-0.77,1.85
-1.85,-1.85,-0.77
--1.85,-0.77,-1.85
-0.76,-1.85,1.85
-1.85,-0.77,-1.85
-*/
     //Nodes for payload
     //s.addNode(0,c.payload_h,0); //12 
     //s.addNode(0,-c.payload_h,0); //13
@@ -233,21 +184,48 @@ void TensegrityHedgehogModel12::addNodes(tgStructure& s,
     s.addNode(0.5, -1.35, -1.2); //  30 
     s.addNode(-0.5, -1.35, -0.2); //  31
     
-    //Central Outter Nodes
+    //Central Outer Nodes
     s.addNode(0,-1.85, -1.2); // 32/ 24 to 30
     s.addNode(0, -1.85, -0.2); // 33/ 29 to 27
     s.addNode(-0.5,-1.85, -0.7); // 34/ 24 to 31
     s.addNode(0.5, -1.85, -0.7); // 35/ 29 to 26
     s.addNode(0, -2.35, -0.8); // 36/  to 
     s.addNode(0, -1.35, -0.8); // 37/  to 
-    
+
+     // Central Rod Nodes
+    s.addNode(-1.315,-1.845 ,0.11);// 38 -- 0 to 1
+    /*s.addNode(, , );// 39 -- 2 to 3
+    s.addNode(, , );// 40 -- 4 to 5
+    s.addNode(, , );// 41 -- 6 to 7
+    s.addNode(, , );// 42 -- 8 to 9
+    s.addNode(, , );// 43 -- 10 to 11
+    s.addNode(, , );// 44 -- 12 to 13
+    s.addNode(, , );// 45 -- 14 to 15
+    s.addNode(, , );// 46 -- 16 to 17
+    s.addNode(, , );// 47 -- 18 to 19
+    s.addNode(, , );// 48 -- 20 to 21
+    s.addNode(, , );// 49 -- 22 to 23*/
+
     
 }
 
 void TensegrityHedgehogModel12::addRods(tgStructure& s)
 {
     // Struts
-    s.addPair( 0,  1, "rod");
+   /* s.addPair( 0, 1,"rod");
+    s.addPair( 2,  3, "rod");
+    s.addPair( 4,  5, "rod");
+    s.addPair( 6,  7, "rod");
+    s.addPair( 8,  9, "rod");
+    s.addPair(10, 11, "rod");
+    s.addPair( 12,  13, "rod");
+    s.addPair( 14,  15, "rod");
+    s.addPair( 16,  17, "rod");
+    s.addPair( 18,  19, "rod");
+    s.addPair( 20,  21, "rod");
+    s.addPair(22, 23, "rod");*/
+    s.addPair( 0, 38,"rod");
+    s.addPair(0, 1, "rod");
     s.addPair( 2,  3, "rod");
     s.addPair( 4,  5, "rod");
     s.addPair( 6,  7, "rod");
@@ -262,7 +240,7 @@ void TensegrityHedgehogModel12::addRods(tgStructure& s)
 
     // Payload
     //s.addPair(12, 13, "payload_rod");
-
+/*
     //Hedgehogcage
     s.addPair( 24,  28, "payload_rod");
     s.addPair( 25,  29, "payload_rod");
@@ -315,7 +293,7 @@ void TensegrityHedgehogModel12::addRods(tgStructure& s)
     s.addPair( 37,  29, "payload_rod");
     
     // Middle Pairs Change
-    s.addPair( 27,  28, "payload_rod");
+    s.addPair( 27,  28, "payload_rod"); */
 }
 
 
@@ -372,12 +350,15 @@ void TensegrityHedgehogModel12::addMuscles(tgStructure& s)
     s.addPair(12,  31, "muscle_in"); // Top
     */
     //Experimetal Center Nodes CHANGE
-    s.addPair(4, 32, "muscle_in"); 
-    s.addPair(8, 33, "muscle_in");
-    s.addPair(12, 34, "muscle_in");
-    s.addPair(0, 35, "muscle_in"); 
-    s.addPair(1, 36, "muscle_in");
-    s.addPair(5, 37, "muscle_in");
+    //s.addPair(4, 32, "muscle_in"); 
+    s.addPair(4, 38, "muscle_in"); // central node It is not a complete rod
+    //s.addPair(8, 33, "muscle_in");
+    //s.addPair(12, 34, "muscle_in");
+    //s.addPair(0, 35, "muscle_in"); 
+    //s.addPair(1, 36, "muscle_in");
+    //s.addPair(5, 37, "muscle_in");
+
+
     //s.addPair(5, 35, "muscle_in");
     //s.addPair(, 36, "muscle_in");
     //s.addPair(, 37, "muscle_in");
@@ -425,7 +406,7 @@ void TensegrityHedgehogModel12::setup(tgWorld& world)
     const tgRod::Config payConfig(c.radius_pay, c.density_pay, c.friction, 
                 c.rollfriction, c.restitution);
     
-    // Define configuration for actuators
+   // Define configuration for actuators
    tgSpringCableActuator::Config muscleConfig(c.stiffness, c.damping, c.pretension * c.stiffness / c.stiffness_in, c.history,
 					    c.maxTens, c.targetVelocity); 
 
@@ -471,7 +452,7 @@ void TensegrityHedgehogModel12::setup(tgWorld& world)
 
     // Use the structureInfo to build ourselves
     structureInfo.buildInto(*this, world); //Tensegrity
-    structureInfos.buildInto(*this, world); //Hedgehog
+    structureInfos.buildInto(*this, world); // Hedgehog
 
     // We could now use tgCast::filter or similar to pull out the
     // models (e.g. muscles) that we want to control. 
