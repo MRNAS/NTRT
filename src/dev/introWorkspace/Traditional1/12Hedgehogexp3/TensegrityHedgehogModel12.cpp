@@ -224,7 +224,7 @@ void TensegrityHedgehogModel12::addRods(tgStructure& s)
     s.addPair( 18,  19, "rod");
     s.addPair( 20,  21, "rod");
     s.addPair(22, 23, "rod");*/
-    s.addPair( 0, 38,"rod");
+    s.addPair( 0, 38,"rod");  
     s.addPair(0, 1, "rod");
     s.addPair( 2,  3, "rod");
     s.addPair( 4,  5, "rod");
