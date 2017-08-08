@@ -11,4 +11,5 @@ Subdirs(
 	12Hedgehogexp
 	12Hedgehogexp2
 	12Hedgehogexp3
+        test1
 )
