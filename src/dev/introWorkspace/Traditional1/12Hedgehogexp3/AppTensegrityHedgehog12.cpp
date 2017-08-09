@@ -68,7 +68,7 @@ int main(int argc, char** argv)
     // the world will delete this
     tgBoxGround* ground = new tgBoxGround(groundConfig);
     
-    const tgWorld::Config config(9.81); // gravity, cm/sec^2  Use this to adjust length scale of world.
+    const tgWorld::Config config(98.1); // gravity, cm/sec^2  Use this to adjust length scale of world.
         // Note, by changing the setting below from 981 to 98.1, we've
         // scaled the world length scale to decimeters not cm.
     tgWorld world(config, ground);

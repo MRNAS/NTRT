@@ -473,13 +473,13 @@ void TensegrityHedgehogModel12::setup(tgWorld& world)
     //Initial location of tensegrity
     s.move(btVector3(0, 6, 0));
     //s.move(btVector3(100, 100, 100));
-    s.move(btVector3(0, 10, 0));
+    s.move(btVector3(0, 20, 0));
     
     
     //Initial Location and orientation of Hedgehog
-    y.move(btVector3(0,14.15, -.7));
-    y.addRotation(btVector3(0,14.15,-.7),btVector3(0,0,1), 180); // Z blue Axis
-    y.addRotation(btVector3(0,14.15,-.7),btVector3(1,0,0), 260); // X red axis
+    y.move(btVector3(0,24.15, -.7)); //y=4.15
+    y.addRotation(btVector3(0,24.15,-.7),btVector3(0,0,1), 180); // Z blue Axis y=4.15
+    y.addRotation(btVector3(0,24.15,-.7),btVector3(1,0,0), 260); // X red axis y=4.15
 
 
     // Create the build spec that uses tags to turn the structure into a real model
@@ -543,10 +543,13 @@ void TensegrityHedgehogModel12::moveModel(btVector3 positionVector,btVector3 rot
 	initialTransform.setRotation(initialRotationQuat);
 	initialTransform.setOrigin(positionVector);
 	
+	//getPRigidBody()->getLinearVelocity();
+	
 	for(int i=0;i<boxes.size();i++)
 	{
 			boxes[i]->getPRigidBody()->setAngularVelocity(angularVector);
 			boxes[i]->getPRigidBody()->setWorldTransform(initialTransform * boxes[i]->getPRigidBody()->getWorldTransform());
+		        boxes[i]->getPRigidBody()->getLinearVelocity();
 	}
 }
 
