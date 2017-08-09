@@ -94,6 +94,9 @@ public:
      * @param[in] dt, the timestep. Must be positive.
      */
     virtual void step(double dt);
+    
+    //Enables the display of location and other quantities
+    //virtual void displayCallback();
 	
 	/**
      * Receives a tgModelVisitor and dispatches itself into the
